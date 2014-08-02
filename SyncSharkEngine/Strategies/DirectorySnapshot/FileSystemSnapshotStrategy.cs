@@ -7,54 +7,56 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
-namespace SyncSharkEngine
+namespace SyncSharkEngine.Strategies.DirectorySnapshot
 {
-    public class DirectorySnapshotService : IDirectorySnapshotService
+    public class FileSystemSnapshotStrategy : IDirectorySnapshotStrategy
     {
         private Dictionary<string, Dictionary<string, IFileInfo>> m_InMemoryStore;
+        private InMemorySnapshotStrategy m_InMemorySnapshotStrategy;
 
-        public DirectorySnapshotService(IEnumerable<IDirectoryInfo> directoryInfos)
+        public FileSystemSnapshotStrategy(InMemorySnapshotStrategy inMemorySnapshotStrategy, IEnumerable<IDirectoryInfo> directoryInfos)
         {
+            m_InMemorySnapshotStrategy = inMemorySnapshotStrategy;
             LoadFromDisk(directoryInfos);
         }
 
         public Dictionary<string, IFileInfo> Create(IDirectoryInfo directoryInfo)
         {
-            Dictionary<string, IFileInfo> dicionary = new Dictionary<string, IFileInfo>();
-            m_InMemoryStore.Add(directoryInfo.FullName, dicionary);
-            foreach (var fileInfo in directoryInfo.GetFiles("*.*", SearchOption.AllDirectories))
-            {
-                string relativePath = fileInfo.FullName.Replace(directoryInfo.FullName, "");
-                dicionary.Add(relativePath, fileInfo);
-            }
+            var snapShot = m_InMemorySnapshotStrategy.Create(directoryInfo);
             SaveToDisk();
-            return dicionary;
-        }
-
-        public bool Exists(IDirectoryInfo directoryInfo)
-        {
-            return m_InMemoryStore.ContainsKey(directoryInfo.FullName);
+            return snapShot;
         }
 
         public Dictionary<string, IFileInfo> Read(IDirectoryInfo directoryInfo)
         {
-            return m_InMemoryStore[directoryInfo.FullName];
+            return m_InMemorySnapshotStrategy.Read(directoryInfo);
         }
 
         public Dictionary<string, IFileInfo> Update(IDirectoryInfo directoryInfo)
         {
-            if (Exists(directoryInfo))
-            {
-                Delete(directoryInfo);
-            }
-            return Create(directoryInfo);
+            var snapshot = m_InMemorySnapshotStrategy.Update(directoryInfo);
+            SaveToDisk();
+            return snapshot;
+        }
+
+        public Dictionary<string, IFileInfo> ReadOrCreate(IDirectoryInfo directoryInfo)
+        {
+            var snapshot = m_InMemorySnapshotStrategy.ReadOrCreate(directoryInfo);
+            SaveToDisk();
+            return snapshot;
         }
 
         public void Delete(IDirectoryInfo directoryInfo)
         {
-            m_InMemoryStore.Remove(directoryInfo.FullName);
+            m_InMemorySnapshotStrategy.Delete(directoryInfo);
             SaveToDisk();
+        }
+
+        public bool Exists(IDirectoryInfo directoryInfo)
+        {
+            return m_InMemorySnapshotStrategy.Exists(directoryInfo);
         }
 
         private void SaveToDisk()
@@ -75,10 +77,19 @@ namespace SyncSharkEngine
             string filePath = GetFilePath(directoryInfos.Select(d => d.FullName));
             if (File.Exists(filePath))
             {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                using (Stream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+                try
                 {
-                    m_InMemoryStore = (Dictionary<string, Dictionary<string, IFileInfo>>)binaryFormatter.Deserialize(stream);
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    using (Stream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        m_InMemoryStore = (Dictionary<string, Dictionary<string, IFileInfo>>)binaryFormatter.Deserialize(stream);
+                    }
+
+                }
+                catch (SerializationException ex)
+                {
+                    Console.WriteLine("Error reading saved state. Deleting file. " + ex.Message);
+                    File.Delete(filePath);
                 }
             }
         }

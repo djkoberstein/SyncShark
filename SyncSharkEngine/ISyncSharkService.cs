@@ -9,8 +9,8 @@ namespace SyncSharkEngine
 {
     public interface ISyncSharkService
     {
-        void CompareAndSync(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo);
-        IEnumerable<ISyncWorkItem> Compare(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo);
+        void CompareAndSync();
+        IEnumerable<ISyncWorkItem> Compare();
         void Sync(IEnumerable<ISyncWorkItem> syncWorkItems);
     }
 }

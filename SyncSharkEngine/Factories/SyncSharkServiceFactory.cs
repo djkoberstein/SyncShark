@@ -5,21 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SyncSharkEngine.Strategies.Compare;
 
 namespace SyncSharkEngine.Factories
 {
     public class SyncSharkServiceFactory : ISyncSharkServiceFactory
     {
-        private ICompareService m_CompareService;
+        private ICompareStrategy m_CompareStrategy;
 
-        public SyncSharkServiceFactory(ICompareService compareService)
+        public SyncSharkServiceFactory(ICompareStrategy compareStrategy)
 	    {
-            m_CompareService = compareService;
+            m_CompareStrategy = compareStrategy;
 	    }
 
-        public ISyncSharkService GetSyncSharkService()
+        public ISyncSharkService GetSyncSharkService(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
         {
-            return new SyncSharkService(m_CompareService);
+            return new SyncSharkService(m_CompareStrategy, leftDirectoryInfo, rightDirectoryInfo);
         }
     }
 }

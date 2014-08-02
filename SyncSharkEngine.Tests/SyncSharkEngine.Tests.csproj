@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompareServiceTests.cs" />
+    <Compile Include="CompareTestArgs.cs" />
+    <Compile Include="MirrorCompareStrategyTests.cs" />
+    <Compile Include="SyncCompareStrategyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyncSharkServiceTests.cs" />
   </ItemGroup>

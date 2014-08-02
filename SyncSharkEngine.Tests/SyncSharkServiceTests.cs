@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SyncSharkEngine.Strategies.Compare;
 
 namespace SyncSharkEngine.Tests
 {
@@ -21,15 +22,15 @@ namespace SyncSharkEngine.Tests
         private const string FILE_PATH_RIGHT = DIRECTORY_PATH_RIGHT + @"\" + FILE_RELATIVE_PATH;
 
         [Test]
-        public void Compare_ShouldInvokeCompareService()
+        public void Compare_ShouldInvokeCompareStrategy()
         {
             // Arrange
-            var compareService = new Mock<ICompareService>();
+            var compareService = new Mock<ICompareStrategy>();
             var directoryInfo = new Mock<IDirectoryInfo>();
-            var syncSharkService = new SyncSharkService(compareService.Object);
+            var syncSharkService = new SyncSharkService(compareService.Object, directoryInfo.Object, directoryInfo.Object);
 
             // Act
-            syncSharkService.Compare(directoryInfo.Object, directoryInfo.Object);
+            syncSharkService.Compare();
 
             // Assert
             compareService.Verify(o => o.Compare(It.IsAny<IDirectoryInfo>(), It.IsAny<IDirectoryInfo>()), Times.Exactly(1));
@@ -55,7 +56,7 @@ namespace SyncSharkEngine.Tests
             List<ISyncWorkItem> syncWorkItemList = new List<ISyncWorkItem>();
             syncWorkItemList.Add(syncWorkItem.Object);
 
-            var syncSharkService = new SyncSharkService(null);
+            var syncSharkService = new SyncSharkService(null, null, null);
 
             // Act
             syncSharkService.Sync(syncWorkItemList);
@@ -85,7 +86,7 @@ namespace SyncSharkEngine.Tests
             List<ISyncWorkItem> syncWorkItemList = new List<ISyncWorkItem>();
             syncWorkItemList.Add(syncWorkItem.Object);
 
-            var syncSharkService = new SyncSharkService(null);
+            var syncSharkService = new SyncSharkService(null, null, null);
 
             // Act
             syncSharkService.Sync(syncWorkItemList);
@@ -114,7 +115,7 @@ namespace SyncSharkEngine.Tests
             List<ISyncWorkItem> syncWorkItemList = new List<ISyncWorkItem>();
             syncWorkItemList.Add(syncWorkItem.Object);
 
-            var syncSharkService = new SyncSharkService(null);
+            var syncSharkService = new SyncSharkService(null, null, null);
 
             // Act
             syncSharkService.Sync(syncWorkItemList);
