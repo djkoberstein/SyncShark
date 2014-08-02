@@ -1,4 +1,4 @@
-﻿using SyncSharkEngine.DataModel;
+﻿using SyncSharkEngine.FileSystem;
 using SyncSharkEngine.Factories;
 using System;
 using System.Collections.Generic;
@@ -10,16 +10,16 @@ namespace SyncSharkEngine.Factories
 {
     public class SyncSharkServiceFactory : ISyncSharkServiceFactory
     {
-        private IDirectorySnapshotServiceFactory m_DirectorySnapshotServiceFactory;
-        
-        public SyncSharkServiceFactory(IDirectorySnapshotServiceFactory directorySnapshotServiceFactory)
+        private ICompareService m_CompareService;
+
+        public SyncSharkServiceFactory(ICompareService compareService)
 	    {
-            m_DirectorySnapshotServiceFactory = directorySnapshotServiceFactory;
+            m_CompareService = compareService;
 	    }
 
         public ISyncSharkService GetSyncSharkService()
         {
-            return new SyncSharkService(m_DirectorySnapshotServiceFactory);
+            return new SyncSharkService(m_CompareService);
         }
     }
 }

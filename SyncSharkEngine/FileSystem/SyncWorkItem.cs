@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkEngine.DataModel
+namespace SyncSharkEngine.FileSystem
 {
     public class SyncWorkItem : ISyncWorkItem
     {

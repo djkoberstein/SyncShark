@@ -40,16 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompareService.cs" />
     <Compile Include="FileSystem\DirectoryInfoFacade.cs" />
     <Compile Include="FileSystem\FileActions.cs" />
     <Compile Include="FileSystem\FileInfoFacade.cs" />
+    <Compile Include="FileSystem\FileSystemInfoFacade.cs" />
     <Compile Include="FileSystem\IDirectoryInfo.cs" />
     <Compile Include="FileSystem\IFileInfo.cs" />
+    <Compile Include="FileSystem\IFileSystemInfo.cs" />
     <Compile Include="FileSystem\ISyncWorkItem.cs" />
     <Compile Include="FileSystem\SyncWorkItem.cs" />
     <Compile Include="Factories\DirectorySnapshotServiceFactory.cs" />
     <Compile Include="Factories\IDirectorySnapshotServiceFactory.cs" />
     <Compile Include="DirectorySnapshotService.cs" />
+    <Compile Include="ICompareService.cs" />
     <Compile Include="IDirectorySnapshotService.cs" />
     <Compile Include="ISyncSharkService.cs" />
     <Compile Include="Factories\ISyncSharkServiceFactory.cs" />

@@ -1,4 +1,4 @@
-﻿using SyncSharkEngine.DataModel;
+﻿using SyncSharkEngine.FileSystem;
 using SyncSharkEngine.Factories;
 using System;
 using System.Collections.Generic;
@@ -11,11 +11,11 @@ namespace SyncSharkEngine
 {
     public class SyncSharkService : ISyncSharkService
     {
-        private IDirectorySnapshotServiceFactory m_DirectorySnapshotServiceFactory;
+        private ICompareService m_CompareService;
 
-        public SyncSharkService(IDirectorySnapshotServiceFactory directorySnapshotServiceFactory)
+        public SyncSharkService(ICompareService compareService)
         {
-            m_DirectorySnapshotServiceFactory = directorySnapshotServiceFactory;
+            m_CompareService = compareService;
         }
 
         public void CompareAndSync(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
@@ -26,83 +26,7 @@ namespace SyncSharkEngine
 
         public IEnumerable<ISyncWorkItem> Compare(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
         {
-            IDirectorySnapshotService directorySnapshotService = m_DirectorySnapshotServiceFactory.GetDirectorySnapshotService(leftDirectoryInfo, rightDirectoryInfo);
-            Dictionary<string, IFileInfo> previousLeftSnapshot = ReadOrCreate(directorySnapshotService, leftDirectoryInfo);
-            Dictionary<string, IFileInfo> previousRightSnapshot = ReadOrCreate(directorySnapshotService, rightDirectoryInfo);
-            Dictionary<string, IFileInfo> leftSnapshot = directorySnapshotService.Update(leftDirectoryInfo);
-            Dictionary<string, IFileInfo> rightSnapshot = directorySnapshotService.Update(rightDirectoryInfo);
-
-            foreach (var kvp in leftSnapshot)
-            {
-                if (rightSnapshot.ContainsKey(kvp.Key))
-                {
-                    IFileInfo leftFileInfo = kvp.Value;
-                    IFileInfo rightFileInfo = rightSnapshot[kvp.Key];
-                    yield return ProcessFileFoundInBothFolders(leftFileInfo, rightFileInfo);
-                }
-                else
-                {
-                    IFileInfo leftFileInfo = kvp.Value;
-                    string relativePath = leftFileInfo.FullName.Replace(leftDirectoryInfo.FullName, "");
-                    string rightFullPath = rightDirectoryInfo.FullName + relativePath;
-                    IFileInfo rightFileInfo = new FileInfoFacade(new FileInfo(rightFullPath));
-                    if (previousLeftSnapshot.ContainsKey(kvp.Key))
-                    {
-                        yield return new SyncWorkItem(rightFileInfo, leftFileInfo, FileActions.DELETE);
-                    }
-                    else
-                    {
-                        yield return new SyncWorkItem(leftFileInfo, rightFileInfo, FileActions.COPY);
-                    }
-                }
-                rightSnapshot.Remove(kvp.Key);
-            }
-
-            foreach(var kvp in rightSnapshot)
-            {
-                IFileInfo rightFileInfo = kvp.Value;
-                string relativePath = rightFileInfo.FullName.Replace(rightDirectoryInfo.FullName, "");
-                string leftFullPath = leftDirectoryInfo.FullName + relativePath;
-                IFileInfo leftFileInfo = new FileInfoFacade(new FileInfo(leftFullPath));
-                if (previousRightSnapshot.ContainsKey(kvp.Key))
-                {
-                    yield return new SyncWorkItem(leftFileInfo, rightFileInfo, FileActions.DELETE);
-                }
-                else
-                {
-                    yield return new SyncWorkItem(rightFileInfo, leftFileInfo, FileActions.COPY);
-                }
-            }
-
-            yield break;
-        }
-
-        private Dictionary<string, IFileInfo> ReadOrCreate(IDirectorySnapshotService directorySnapshotService, IDirectoryInfo directoryInfo)
-        {
-            if (directorySnapshotService.Exists(directoryInfo))
-            {
-                return directorySnapshotService.Read(directoryInfo);
-            }
-            else
-            {
-                return directorySnapshotService.Create(directoryInfo);
-            }
-        }
-
-        private ISyncWorkItem ProcessFileFoundInBothFolders(IFileInfo leftFileInfo, IFileInfo rightFileInfo)
-        {
-            if (leftFileInfo.LastWriteTimeUtc > rightFileInfo.LastWriteTimeUtc)
-            {
-                return new SyncWorkItem(leftFileInfo, rightFileInfo, FileActions.COPY);
-            }
-            else if (leftFileInfo.LastWriteTimeUtc < rightFileInfo.LastWriteTimeUtc)
-            {
-                return new SyncWorkItem(rightFileInfo, leftFileInfo, FileActions.COPY);
-            }
-            else
-            {
-                return new SyncWorkItem(rightFileInfo, leftFileInfo, FileActions.NONE);
-            }
+            return m_CompareService.Compare(leftDirectoryInfo, rightDirectoryInfo);
         }
 
         public void Sync(IEnumerable<ISyncWorkItem> syncWorkItems)

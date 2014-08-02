@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkEngine.DataModel
+namespace SyncSharkEngine.FileSystem
 {
-    public interface IDirectoryInfo
+    public interface IDirectoryInfo : IFileSystemInfo
     {
-        string FullName { get; }
         IEnumerable<IFileInfo> GetFiles(string searchPattern, SearchOption searchOption);
     }
 }

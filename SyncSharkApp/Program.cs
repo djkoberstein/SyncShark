@@ -1,5 +1,5 @@
 ﻿using SyncSharkEngine;
-using SyncSharkEngine.DataModel;
+using SyncSharkEngine.FileSystem;
 using SyncSharkEngine.Factories;
 using SyncSharkEngine.Tests;
 using System;
@@ -15,12 +15,9 @@ namespace SyncSharkApp
     {
         static void Main(string[] args)
         {
-            SyncSharkServiceTests t = new SyncSharkServiceTests();
-            t.Sync_ShouldCallFileInfoDeleteMethodOnDelete();
-            return;
-
             IDirectorySnapshotServiceFactory directorySnapshotServiceFactory = new DirectorySnapshotServiceFactory();
-            ISyncSharkServiceFactory syncSharkServiceFactory = new SyncSharkServiceFactory(directorySnapshotServiceFactory);
+            ICompareService compareService = new CompareService(directorySnapshotServiceFactory);
+            ISyncSharkServiceFactory syncSharkServiceFactory = new SyncSharkServiceFactory(compareService);
             
             ISyncSharkService syncSharkService = syncSharkServiceFactory.GetSyncSharkService();
             IDirectoryInfo leftDirectoryInfo = new DirectoryInfoFacade(new DirectoryInfo(args[0]));

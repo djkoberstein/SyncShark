@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkEngine.DataModel
+namespace SyncSharkEngine.FileSystem
 {
     public class DirectoryInfoFacade : IDirectoryInfo
     {
@@ -26,6 +26,16 @@ namespace SyncSharkEngine.DataModel
                 yield return new FileInfoFacade(new FileInfo(fileInfo.FullName));
             }
             yield break;
+        }
+
+        public DateTime LastWriteTimeUtc
+        {
+            get { return m_DirectoryInfo.LastWriteTimeUtc; }
+        }
+
+        public void Delete()
+        {
+            m_DirectoryInfo.Delete();
         }
     }
 }
