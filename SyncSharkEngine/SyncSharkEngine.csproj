@@ -55,11 +55,11 @@
     <Compile Include="Strategies\Compare\ICompareStrategy.cs" />
     <Compile Include="Strategies\DirectorySnapshot\IDirectorySnapshotStrategy.cs" />
     <Compile Include="ISyncSharkService.cs" />
-    <Compile Include="Factories\ISyncSharkServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\DirectorySnapshot\InMemorySnapshotStrategy.cs" />
+    <Compile Include="Strategies\IExecuteStrategy.cs" />
+    <Compile Include="Strategies\ExecuteStrategy.cs" />
     <Compile Include="SyncSharkService.cs" />
-    <Compile Include="Factories\SyncSharkServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

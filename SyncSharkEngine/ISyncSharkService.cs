@@ -9,8 +9,7 @@ namespace SyncSharkEngine
 {
     public interface ISyncSharkService
     {
-        void CompareAndSync();
-        IEnumerable<ISyncWorkItem> Compare();
-        void Sync(IEnumerable<ISyncWorkItem> syncWorkItems);
+        void Sync();
+        void Mirror();
     }
 }

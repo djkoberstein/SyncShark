@@ -1,7 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
 using SyncSharkEngine.Strategies.Compare;
-using SyncSharkEngine.Factories;
 using SyncSharkEngine.FileSystem;
 using System;
 using System.Collections.Generic;

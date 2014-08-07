@@ -1,5 +1,4 @@
-﻿using SyncSharkEngine.Factories;
-using SyncSharkEngine.FileSystem;
+﻿using SyncSharkEngine.FileSystem;
 using SyncSharkEngine.Strategies.DirectorySnapshot;
 using System;
 using System.Collections.Generic;

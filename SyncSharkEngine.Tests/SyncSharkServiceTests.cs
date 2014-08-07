@@ -1,7 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
 using SyncSharkEngine.FileSystem;
-using SyncSharkEngine.Factories;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,122 +8,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SyncSharkEngine.Strategies.Compare;
+using SyncSharkEngine.Strategies;
 
 namespace SyncSharkEngine.Tests
 {
     [TestFixture]
     public class SyncSharkServiceTests
     {
-        private const string DIRECTORY_PATH_LEFT = @"C:\Folder1";
-        private const string DIRECTORY_PATH_RIGHT = @"C:\Folder2";
-        private const string FILE_RELATIVE_PATH = @"TestFile.xml";
-        private const string FILE_PATH_LEFT = DIRECTORY_PATH_LEFT + @"\" + FILE_RELATIVE_PATH;
-        private const string FILE_PATH_RIGHT = DIRECTORY_PATH_RIGHT + @"\" + FILE_RELATIVE_PATH;
-
         [Test]
-        public void Compare_ShouldInvokeCompareStrategy()
+        public void Sync_ShouldInvokeCompareAndExecute()
         {
             // Arrange
-            var compareService = new Mock<ICompareStrategy>();
-            var directoryInfo = new Mock<IDirectoryInfo>();
-            var syncSharkService = new SyncSharkService(compareService.Object, directoryInfo.Object, directoryInfo.Object);
+            var syncCompareStrategy = new Mock<IExecuteStrategy>();
+            var mirrorCompareStrategy = new Mock<IExecuteStrategy>();
+
+            var syncSharkService = new SyncSharkService(syncCompareStrategy.Object, mirrorCompareStrategy.Object);
 
             // Act
-            syncSharkService.Compare();
+            syncSharkService.Sync();
 
             // Assert
-            compareService.Verify(o => o.Compare(It.IsAny<IDirectoryInfo>(), It.IsAny<IDirectoryInfo>()), Times.Exactly(1));
+            syncCompareStrategy.Verify(o => o.CompareAndExecute(), Times.Exactly(1));
         }
 
         [Test]
-        public void Sync_ShouldCallFileInfoReadWriteMethodOnCopy()
+        public void Mirror_ShouldInvokeCompareAndExecute()
         {
             // Arrange
-            var sourceFileInfo = new Mock<IFileInfo>();
-            sourceFileInfo.Setup(o => o.FullName).Returns(FILE_PATH_LEFT);
-            sourceFileInfo.Setup(o => o.OpenRead()).Returns(new MemoryStream());
+            var syncCompareStrategy = new Mock<IExecuteStrategy>();
+            var mirrorCompareStrategy = new Mock<IExecuteStrategy>();
 
-            var destinationFileInfo = new Mock<IFileInfo>();
-            destinationFileInfo.Setup(o => o.FullName).Returns(FILE_PATH_RIGHT);
-            destinationFileInfo.Setup(o => o.OpenWrite()).Returns(new MemoryStream());
-
-            var syncWorkItem = new Mock<ISyncWorkItem>();
-            syncWorkItem.Setup(o => o.Source).Returns(sourceFileInfo.Object);
-            syncWorkItem.Setup(o => o.Destination).Returns(destinationFileInfo.Object);
-            syncWorkItem.Setup(o => o.FileAction).Returns(FileActions.COPY);
-            
-            List<ISyncWorkItem> syncWorkItemList = new List<ISyncWorkItem>();
-            syncWorkItemList.Add(syncWorkItem.Object);
-
-            var syncSharkService = new SyncSharkService(null, null, null);
+            var syncSharkService = new SyncSharkService(syncCompareStrategy.Object, mirrorCompareStrategy.Object);
 
             // Act
-            syncSharkService.Sync(syncWorkItemList);
+            syncSharkService.Mirror();
 
             // Assert
-            sourceFileInfo.Verify(o => o.OpenRead(), Times.Exactly(1));
-            destinationFileInfo.Verify(o => o.OpenWrite(), Times.Exactly(1));
+            mirrorCompareStrategy.Verify(o => o.CompareAndExecute(), Times.Exactly(1));
         }
 
-        [Test]
-        public void Sync_ShouldCallFileInfoDeleteMethodOnDelete()
-        {
-            // Arrange
-            var sourceFileInfo = new Mock<IFileInfo>();
-            sourceFileInfo.Setup(o => o.FullName).Returns(FILE_PATH_LEFT);
-            sourceFileInfo.Setup(o => o.OpenRead()).Returns(new MemoryStream());
-
-            var destinationFileInfo = new Mock<IFileInfo>();
-            destinationFileInfo.Setup(o => o.FullName).Returns(FILE_PATH_RIGHT);
-            destinationFileInfo.Setup(o => o.OpenWrite()).Returns(new MemoryStream());
-
-            var syncWorkItem = new Mock<ISyncWorkItem>();
-            syncWorkItem.Setup(o => o.Source).Returns(sourceFileInfo.Object);
-            syncWorkItem.Setup(o => o.Destination).Returns(destinationFileInfo.Object);
-            syncWorkItem.Setup(o => o.FileAction).Returns(FileActions.DELETE);
-
-            List<ISyncWorkItem> syncWorkItemList = new List<ISyncWorkItem>();
-            syncWorkItemList.Add(syncWorkItem.Object);
-
-            var syncSharkService = new SyncSharkService(null, null, null);
-
-            // Act
-            syncSharkService.Sync(syncWorkItemList);
-
-            // Assert
-            destinationFileInfo.Verify(o => o.Delete(), Times.Exactly(1));
-        }
-
-        [Test]
-        public void Sync_ShouldDoNothingOnFileActionNone()
-        {
-            // Arrange
-            var sourceFileInfo = new Mock<IFileInfo>();
-            sourceFileInfo.Setup(o => o.FullName).Returns(FILE_PATH_LEFT);
-            sourceFileInfo.Setup(o => o.OpenRead()).Returns(new MemoryStream());
-
-            var destinationFileInfo = new Mock<IFileInfo>();
-            destinationFileInfo.Setup(o => o.FullName).Returns(FILE_PATH_RIGHT);
-            destinationFileInfo.Setup(o => o.OpenWrite()).Returns(new MemoryStream());
-
-            var syncWorkItem = new Mock<ISyncWorkItem>();
-            syncWorkItem.Setup(o => o.Source).Returns(sourceFileInfo.Object);
-            syncWorkItem.Setup(o => o.Destination).Returns(destinationFileInfo.Object);
-            syncWorkItem.Setup(o => o.FileAction).Returns(FileActions.DELETE);
-
-            List<ISyncWorkItem> syncWorkItemList = new List<ISyncWorkItem>();
-            syncWorkItemList.Add(syncWorkItem.Object);
-
-            var syncSharkService = new SyncSharkService(null, null, null);
-
-            // Act
-            syncSharkService.Sync(syncWorkItemList);
-
-            // Assert
-            sourceFileInfo.Verify(o => o.OpenRead(), Times.Exactly(0));
-            sourceFileInfo.Verify(o => o.OpenWrite(), Times.Exactly(0));
-            sourceFileInfo.Verify(o => o.Delete(), Times.Exactly(0));
-        }
     }
 }
 

@@ -1,5 +1,4 @@
 ﻿using SyncSharkEngine.FileSystem;
-using SyncSharkEngine.Factories;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,58 +6,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SyncSharkEngine.Strategies.Compare;
+using SyncSharkEngine.Strategies;
 
 namespace SyncSharkEngine
 {
     public class SyncSharkService : ISyncSharkService
     {
-        private ICompareStrategy m_CompareStrategy;
-        private IDirectoryInfo m_LeftDirectoryInfo;
-        private IDirectoryInfo m_RightDirectoryInfo;
+        private IExecuteStrategy m_SyncExecutionStrategy;
+        private IExecuteStrategy m_MirrorExecutionStrategy;
 
-        public SyncSharkService(ICompareStrategy compareStrategy, IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
+        public SyncSharkService(IExecuteStrategy syncExecutionStrategy, IExecuteStrategy mirrorExecutionStrategy)
         {
-            m_CompareStrategy = compareStrategy;
-            m_LeftDirectoryInfo = leftDirectoryInfo;
-            m_RightDirectoryInfo = rightDirectoryInfo;
+            m_SyncExecutionStrategy = syncExecutionStrategy;
+            m_MirrorExecutionStrategy = mirrorExecutionStrategy;
         }
 
-        public void CompareAndSync()
+        public void Sync()
         {
-            var syncWorkItems = Compare();
-            Sync(syncWorkItems);
+            m_SyncExecutionStrategy.CompareAndExecute();
         }
 
-        public IEnumerable<ISyncWorkItem> Compare()
+        public void Mirror()
         {
-            return m_CompareStrategy.Compare(m_LeftDirectoryInfo, m_RightDirectoryInfo);
-        }
-
-        public void Sync(IEnumerable<ISyncWorkItem> syncWorkItems)
-        {
-            foreach (var syncWorkItem in syncWorkItems)
-            {
-                switch (syncWorkItem.FileAction)
-                {
-                    case FileActions.NONE:
-                        break;
-                    case FileActions.COPY:
-                        syncWorkItem.Destination.Delete();
-                        using (Stream readStream = syncWorkItem.Source.OpenRead())
-                        using (Stream writeStream = syncWorkItem.Destination.OpenWrite())
-                        {
-                            readStream.CopyTo(writeStream);
-                        }
-                        break;
-                    case FileActions.DELETE:
-                        syncWorkItem.Destination.Delete();
-                        break;
-                    case FileActions.CONFLICT:
-                        break;
-                    default:
-                        break;
-                }
-            }
+            m_MirrorExecutionStrategy.CompareAndExecute();
         }
     }
 }

@@ -14,49 +14,52 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
     public class FileSystemSnapshotStrategy : IDirectorySnapshotStrategy
     {
         private Dictionary<string, Dictionary<string, IFileInfo>> m_InMemoryStore;
-        private InMemorySnapshotStrategy m_InMemorySnapshotStrategy;
+        private IDirectorySnapshotStrategy m_DirectorySnapshotStrategy;
 
-        public FileSystemSnapshotStrategy(InMemorySnapshotStrategy inMemorySnapshotStrategy, IEnumerable<IDirectoryInfo> directoryInfos)
+        public FileSystemSnapshotStrategy(IDirectorySnapshotStrategy directorySnapshotStrategy, IDirectoryInfo leftDirectoryInfos, IDirectoryInfo rightDirectoryInfos)
         {
-            m_InMemorySnapshotStrategy = inMemorySnapshotStrategy;
+            m_DirectorySnapshotStrategy = directorySnapshotStrategy;
+            List<IDirectoryInfo> directoryInfos = new List<IDirectoryInfo>();
+            directoryInfos.Add(leftDirectoryInfos);
+            directoryInfos.Add(rightDirectoryInfos);
             LoadFromDisk(directoryInfos);
         }
 
         public Dictionary<string, IFileInfo> Create(IDirectoryInfo directoryInfo)
         {
-            var snapShot = m_InMemorySnapshotStrategy.Create(directoryInfo);
+            var snapShot = m_DirectorySnapshotStrategy.Create(directoryInfo);
             SaveToDisk();
             return snapShot;
         }
 
         public Dictionary<string, IFileInfo> Read(IDirectoryInfo directoryInfo)
         {
-            return m_InMemorySnapshotStrategy.Read(directoryInfo);
+            return m_DirectorySnapshotStrategy.Read(directoryInfo);
         }
 
         public Dictionary<string, IFileInfo> Update(IDirectoryInfo directoryInfo)
         {
-            var snapshot = m_InMemorySnapshotStrategy.Update(directoryInfo);
+            var snapshot = m_DirectorySnapshotStrategy.Update(directoryInfo);
             SaveToDisk();
             return snapshot;
         }
 
         public Dictionary<string, IFileInfo> ReadOrCreate(IDirectoryInfo directoryInfo)
         {
-            var snapshot = m_InMemorySnapshotStrategy.ReadOrCreate(directoryInfo);
+            var snapshot = m_DirectorySnapshotStrategy.ReadOrCreate(directoryInfo);
             SaveToDisk();
             return snapshot;
         }
 
         public void Delete(IDirectoryInfo directoryInfo)
         {
-            m_InMemorySnapshotStrategy.Delete(directoryInfo);
+            m_DirectorySnapshotStrategy.Delete(directoryInfo);
             SaveToDisk();
         }
 
         public bool Exists(IDirectoryInfo directoryInfo)
         {
-            return m_InMemorySnapshotStrategy.Exists(directoryInfo);
+            return m_DirectorySnapshotStrategy.Exists(directoryInfo);
         }
 
         private void SaveToDisk()
