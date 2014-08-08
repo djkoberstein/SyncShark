@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompareTestArgs.cs" />
+    <Compile Include="DirectorySnapshotFilterDecoratorTests.cs" />
     <Compile Include="ExecuteStrategyTests.cs" />
     <Compile Include="MirrorCompareStrategyTests.cs" />
     <Compile Include="SyncCompareStrategyTests.cs" />
