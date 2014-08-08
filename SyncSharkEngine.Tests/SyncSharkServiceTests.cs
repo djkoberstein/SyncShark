@@ -21,14 +21,15 @@ namespace SyncSharkEngine.Tests
             // Arrange
             var syncCompareStrategy = new Mock<IExecuteStrategy>();
             var mirrorCompareStrategy = new Mock<IExecuteStrategy>();
+            var directoryInfo = new Mock<IDirectoryInfo>();
 
             var syncSharkService = new SyncSharkService(syncCompareStrategy.Object, mirrorCompareStrategy.Object);
 
             // Act
-            syncSharkService.Sync();
+            syncSharkService.Sync(directoryInfo.Object, directoryInfo.Object);
 
             // Assert
-            syncCompareStrategy.Verify(o => o.CompareAndExecute(), Times.Exactly(1));
+            syncCompareStrategy.Verify(o => o.CompareAndExecute(It.IsAny<IDirectoryInfo>(), It.IsAny<IDirectoryInfo>()), Times.Exactly(1));
         }
 
         [Test]
@@ -37,16 +38,16 @@ namespace SyncSharkEngine.Tests
             // Arrange
             var syncCompareStrategy = new Mock<IExecuteStrategy>();
             var mirrorCompareStrategy = new Mock<IExecuteStrategy>();
+            var directoryInfo = new Mock<IDirectoryInfo>();
 
             var syncSharkService = new SyncSharkService(syncCompareStrategy.Object, mirrorCompareStrategy.Object);
 
             // Act
-            syncSharkService.Mirror();
+            syncSharkService.Mirror(directoryInfo.Object, directoryInfo.Object);
 
             // Assert
-            mirrorCompareStrategy.Verify(o => o.CompareAndExecute(), Times.Exactly(1));
+            mirrorCompareStrategy.Verify(o => o.CompareAndExecute(It.IsAny<IDirectoryInfo>(), It.IsAny<IDirectoryInfo>()), Times.Exactly(1));
         }
-
     }
 }
 

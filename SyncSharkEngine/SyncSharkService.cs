@@ -21,14 +21,14 @@ namespace SyncSharkEngine
             m_MirrorExecutionStrategy = mirrorExecutionStrategy;
         }
 
-        public void Sync()
+        public void Sync(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
         {
-            m_SyncExecutionStrategy.CompareAndExecute();
+            m_SyncExecutionStrategy.CompareAndExecute(leftDirectoryInfo, rightDirectoryInfo);
         }
 
-        public void Mirror()
+        public void Mirror(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
         {
-            m_MirrorExecutionStrategy.CompareAndExecute();
+            m_MirrorExecutionStrategy.CompareAndExecute(leftDirectoryInfo, rightDirectoryInfo);
         }
     }
 }

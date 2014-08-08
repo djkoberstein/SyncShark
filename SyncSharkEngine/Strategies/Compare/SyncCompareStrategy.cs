@@ -20,8 +20,8 @@ namespace SyncSharkEngine.Strategies.Compare
 
         public IEnumerable<ISyncWorkItem> Compare(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
         {
-            Dictionary<string, IFileInfo> previousLeftSnapshot = m_DirectorySnapshotStrategy.ReadOrCreate(leftDirectoryInfo);
-            Dictionary<string, IFileInfo> previousRightSnapshot = m_DirectorySnapshotStrategy.ReadOrCreate(rightDirectoryInfo);
+            Dictionary<string, IFileInfo> previousLeftSnapshot = m_DirectorySnapshotStrategy.Read(leftDirectoryInfo);
+            Dictionary<string, IFileInfo> previousRightSnapshot = m_DirectorySnapshotStrategy.Read(rightDirectoryInfo);
             Dictionary<string, IFileInfo> leftSnapshot = m_DirectorySnapshotStrategy.Update(leftDirectoryInfo);
             Dictionary<string, IFileInfo> rightSnapshot = m_DirectorySnapshotStrategy.Update(rightDirectoryInfo);
 

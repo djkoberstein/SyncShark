@@ -27,10 +27,10 @@ namespace SyncSharkEngine.Tests
             // Arrange
             var compareService = new Mock<ICompareStrategy>();
             var directoryInfo = new Mock<IDirectoryInfo>();
-            var executeStrategy = new ExecuteStrategy(compareService.Object, directoryInfo.Object, directoryInfo.Object);
+            var executeStrategy = new ExecuteStrategy(compareService.Object);
 
             // Act
-            executeStrategy.Compare();
+            executeStrategy.Compare(directoryInfo.Object, directoryInfo.Object);
 
             // Assert
             compareService.Verify(o => o.Compare(It.IsAny<IDirectoryInfo>(), It.IsAny<IDirectoryInfo>()), Times.Exactly(1));
@@ -56,7 +56,7 @@ namespace SyncSharkEngine.Tests
             List<ISyncWorkItem> syncWorkItemList = new List<ISyncWorkItem>();
             syncWorkItemList.Add(syncWorkItem.Object);
 
-            var executeStrategy = new ExecuteStrategy(null, null, null);
+            var executeStrategy = new ExecuteStrategy(null);
 
             // Act
             executeStrategy.Execute(syncWorkItemList);
@@ -86,7 +86,7 @@ namespace SyncSharkEngine.Tests
             List<ISyncWorkItem> syncWorkItemList = new List<ISyncWorkItem>();
             syncWorkItemList.Add(syncWorkItem.Object);
 
-            var executeStrategy = new ExecuteStrategy(null, null, null);
+            var executeStrategy = new ExecuteStrategy(null);
 
             // Act
             executeStrategy.Execute(syncWorkItemList);
@@ -115,7 +115,7 @@ namespace SyncSharkEngine.Tests
             List<ISyncWorkItem> syncWorkItemList = new List<ISyncWorkItem>();
             syncWorkItemList.Add(syncWorkItem.Object);
 
-            var executeStrategy = new ExecuteStrategy(null, null, null);
+            var executeStrategy = new ExecuteStrategy(null);
 
             // Act
             executeStrategy.Execute(syncWorkItemList);

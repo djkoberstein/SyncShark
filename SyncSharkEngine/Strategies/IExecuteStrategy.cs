@@ -9,8 +9,8 @@ namespace SyncSharkEngine.Strategies
 {
     public interface IExecuteStrategy
     {
-        void CompareAndExecute();
-        IEnumerable<ISyncWorkItem> Compare();
+        void CompareAndExecute(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo);
+        IEnumerable<ISyncWorkItem> Compare(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo);
         void Execute(IEnumerable<ISyncWorkItem> syncWorkItems);
     }
 }

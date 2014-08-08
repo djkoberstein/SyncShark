@@ -16,20 +16,35 @@ namespace SyncSharkApp
     {
         static void Main(string[] args)
         {
-            ISyncSharkService syncSharkService = Compose(args[0], args[1]);
-            syncSharkService.Sync();
+            try
+            {
+                ISyncSharkService syncSharkService = Compose();
+
+                IDirectoryInfo leftDirectoryInfo = new DirectoryInfoFacade(new DirectoryInfo(args[0]));
+                IDirectoryInfo rightDirectoryInfo = new DirectoryInfoFacade(new DirectoryInfo(args[1]));
+                syncSharkService.Mirror(leftDirectoryInfo, rightDirectoryInfo);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Console.ReadLine();
+            }
         }
 
-        static ISyncSharkService Compose(string leftDirectoryPath, string rightDirectoryPath)
+        static ISyncSharkService Compose()
         {
-            IDirectoryInfo leftDirectoryInfo = new DirectoryInfoFacade(new DirectoryInfo(leftDirectoryPath));
-            IDirectoryInfo rightDirectoryInfo = new DirectoryInfoFacade(new DirectoryInfo(rightDirectoryPath));
-            IDirectorySnapshotStrategy inMemorySnapshotStrategy = new InMemorySnapshotStrategy();
-            IDirectorySnapshotStrategy fileSystemSnapshotStrategy = new FileSystemSnapshotStrategy(inMemorySnapshotStrategy, leftDirectoryInfo, rightDirectoryInfo);
-            ICompareStrategy mirrorCompareStrategy = new MirrorCompareStrategy(inMemorySnapshotStrategy);
-            ICompareStrategy syncCompareStrategy = new SyncCompareStrategy(fileSystemSnapshotStrategy);
-            IExecuteStrategy mirrorExecuteStrategy = new ExecuteStrategy(mirrorCompareStrategy, leftDirectoryInfo, rightDirectoryInfo);
-            IExecuteStrategy syncExecuteStrategy = new ExecuteStrategy(syncCompareStrategy, leftDirectoryInfo, rightDirectoryInfo);
+            // Mirror components
+            MemorySnapshotStrategy memorySnapshotStrategy = new MemorySnapshotStrategy();
+            ICompareStrategy mirrorCompareStrategy = new MirrorCompareStrategy(memorySnapshotStrategy);
+            IExecuteStrategy mirrorExecuteStrategy = new ExecuteStrategy(mirrorCompareStrategy);
+
+            // Sync components
+            IDirectorySnapshotStrategy fileSystemSnapshotStrategy = new FileSystemSnapshotStrategy(memorySnapshotStrategy);
+            IDirectorySnapshotStrategy appFileFilter = new DirectorySnapshotFilterDecorator(fileSystemSnapshotStrategy);
+            ICompareStrategy syncCompareStrategy = new SyncCompareStrategy(appFileFilter);
+            IExecuteStrategy syncExecuteStrategy = new ExecuteStrategy(syncCompareStrategy);
+            
+            // Service
             ISyncSharkService syncSharkService = new SyncSharkService(syncExecuteStrategy, mirrorExecuteStrategy);
             
             return syncSharkService;

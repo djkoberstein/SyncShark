@@ -12,26 +12,22 @@ namespace SyncSharkEngine.Strategies
     public class ExecuteStrategy : IExecuteStrategy
     {
         private ICompareStrategy m_CompareStrategy;
-        private IDirectoryInfo m_LeftDirectoryInfo;
-        private IDirectoryInfo m_RightDirectoryInfo;
 
-        public ExecuteStrategy(ICompareStrategy compareStrategy, IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
+        public ExecuteStrategy(ICompareStrategy compareStrategy)
         {
             m_CompareStrategy = compareStrategy;
-            m_LeftDirectoryInfo = leftDirectoryInfo;
-            m_RightDirectoryInfo = rightDirectoryInfo;
         }
 
 
-        public void CompareAndExecute()
+        public void CompareAndExecute(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
         {
-            var syncWorkItems = Compare();
+            var syncWorkItems = Compare(leftDirectoryInfo, rightDirectoryInfo);
             Execute(syncWorkItems);
         }
 
-        public IEnumerable<ISyncWorkItem> Compare()
+        public IEnumerable<ISyncWorkItem> Compare(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
         {
-            return m_CompareStrategy.Compare(m_LeftDirectoryInfo, m_RightDirectoryInfo);
+            return m_CompareStrategy.Compare(leftDirectoryInfo, rightDirectoryInfo);
         }
 
         public void Execute(IEnumerable<ISyncWorkItem> syncWorkItems)

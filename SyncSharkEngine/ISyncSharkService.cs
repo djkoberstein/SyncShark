@@ -9,7 +9,7 @@ namespace SyncSharkEngine
 {
     public interface ISyncSharkService
     {
-        void Sync();
-        void Mirror();
+        void Sync(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo);
+        void Mirror(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo);
     }
 }

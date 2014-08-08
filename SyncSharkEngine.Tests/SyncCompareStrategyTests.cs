@@ -31,9 +31,8 @@ namespace SyncSharkEngine.Tests
             var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT);
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Exists(It.IsAny<IDirectoryInfo>())).Returns(true);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
 
@@ -59,9 +58,8 @@ namespace SyncSharkEngine.Tests
             var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Exists(It.IsAny<IDirectoryInfo>())).Returns(true);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
 
@@ -87,9 +85,8 @@ namespace SyncSharkEngine.Tests
             var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 1));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Exists(It.IsAny<IDirectoryInfo>())).Returns(true);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
 
@@ -115,9 +112,8 @@ namespace SyncSharkEngine.Tests
             var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Exists(It.IsAny<IDirectoryInfo>())).Returns(true);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
 
@@ -143,9 +139,8 @@ namespace SyncSharkEngine.Tests
             var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Exists(It.IsAny<IDirectoryInfo>())).Returns(true);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
 
@@ -170,9 +165,8 @@ namespace SyncSharkEngine.Tests
             var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT);
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Exists(It.IsAny<IDirectoryInfo>())).Returns(true);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
 
@@ -199,9 +193,8 @@ namespace SyncSharkEngine.Tests
             var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Exists(It.IsAny<IDirectoryInfo>())).Returns(true);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.ReadOrCreate(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
             dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
 

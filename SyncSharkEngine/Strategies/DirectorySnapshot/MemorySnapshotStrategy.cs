@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace SyncSharkEngine.Strategies.DirectorySnapshot
 {
-    public class InMemorySnapshotStrategy : IDirectorySnapshotStrategy
+    public class MemorySnapshotStrategy : IDirectorySnapshotStrategy
     {
         private Dictionary<string, Dictionary<string, IFileInfo>> m_InMemoryStore;
 
-        public InMemorySnapshotStrategy()
+        public MemorySnapshotStrategy()
         {
             m_InMemoryStore = new Dictionary<string, Dictionary<string, IFileInfo>>();
         }
@@ -31,7 +31,14 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
 
         public Dictionary<string, IFileInfo> Read(IDirectoryInfo directoryInfo)
         {
-            return m_InMemoryStore[directoryInfo.FullName];
+            if (Exists(directoryInfo))
+            {
+                return m_InMemoryStore[directoryInfo.FullName];
+            }
+            else
+            {
+                return new Dictionary<string, IFileInfo>();
+            }
         }
 
         public Dictionary<string, IFileInfo> Update(IDirectoryInfo directoryInfo)
@@ -43,24 +50,12 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
             return Create(directoryInfo);
         }
 
-        public Dictionary<string, IFileInfo> ReadOrCreate(IDirectoryInfo directoryInfo)
-        {
-            if (Exists(directoryInfo))
-            {
-                return Read(directoryInfo);
-            }
-            else
-            {
-                return Create(directoryInfo);
-            }
-        }
-
-        public void Delete(IDirectoryInfo directoryInfo)
+        private void Delete(IDirectoryInfo directoryInfo)
         {
             m_InMemoryStore.Remove(directoryInfo.FullName);
         }
 
-        public bool Exists(IDirectoryInfo directoryInfo)
+        private bool Exists(IDirectoryInfo directoryInfo)
         {
             return m_InMemoryStore.ContainsKey(directoryInfo.FullName);
         }

@@ -12,8 +12,5 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
         Dictionary<string, IFileInfo> Create(IDirectoryInfo directoryInfo);
         Dictionary<string, IFileInfo> Read(IDirectoryInfo directoryInfo);
         Dictionary<string, IFileInfo> Update(IDirectoryInfo directoryInfo);
-        Dictionary<string, IFileInfo> ReadOrCreate(IDirectoryInfo directoryInfo);
-        void Delete(IDirectoryInfo directoryInfo);
-        bool Exists(IDirectoryInfo directoryInfo);
     }
 }

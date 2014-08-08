@@ -47,7 +47,8 @@ namespace SyncSharkEngine.FileSystem
 
         public void Delete()
         {
-            m_FileInfo.Delete();
+            if (m_FileInfo.Exists)
+                m_FileInfo.Delete();
         }
     }
 }
