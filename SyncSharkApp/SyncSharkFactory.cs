@@ -1,4 +1,5 @@
 ﻿using SyncSharkApp;
+using SyncSharkEngine.FileSystem;
 using SyncSharkEngine.Strategies;
 using SyncSharkEngine.Strategies.Compare;
 using SyncSharkEngine.Strategies.DirectorySnapshot;
@@ -22,7 +23,8 @@ namespace SyncSharkEngine
             // Sync components
             IDirectorySnapshotStrategy fileSystemSnapshotStrategy = new FileSystemSnapshotStrategy(memorySnapshotStrategy);
             IDirectorySnapshotStrategy appFileFilter = new DirectorySnapshotFilterDecorator(fileSystemSnapshotStrategy);
-            ICompareStrategy syncCompareStrategy = new SyncCompareStrategy(appFileFilter);
+            IFileSystemInfoFactory fileSystemInfoFactory = new FileSystemInfoFactory();
+            ICompareStrategy syncCompareStrategy = new SyncCompareStrategy(appFileFilter, fileSystemInfoFactory);
             IExecuteStrategy syncExecuteStrategy = new ExecuteStrategy(syncCompareStrategy);
 
             // Service

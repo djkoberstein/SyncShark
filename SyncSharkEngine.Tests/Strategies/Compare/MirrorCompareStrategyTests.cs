@@ -9,8 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SyncSharkEngine.Strategies.DirectorySnapshot;
+using SyncSharkEngine.Tests.Strategies.Compare;
 
-namespace SyncSharkEngine.Tests
+namespace SyncSharkEngine.Tests.Compare
 {
     [TestFixture]
     class MirrorCompareStrategyTests
@@ -20,15 +21,22 @@ namespace SyncSharkEngine.Tests
         private const string FILE_RELATIVE_PATH = @"TestFile.xml";
         private const string FILE_PATH_LEFT = DIRECTORY_PATH_LEFT + @"\" + FILE_RELATIVE_PATH;
         private const string FILE_PATH_RIGHT = DIRECTORY_PATH_RIGHT + @"\" + FILE_RELATIVE_PATH;
+        private CompareTestArgsFactory m_CompareTestArgsFactory;
+
+        [SetUp]
+        public void Setup()
+        {
+            m_CompareTestArgsFactory = new CompareTestArgsFactory();
+        }
 
         [Test]
         public void Compare_ShouldCopyFileLeftToRightWhenAddedToTheLeft()
         {
             // Arrange
-            var previousLeftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT);
-            var previousRightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT);
-            var leftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT);
+            var previousLeftArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_LEFT);
+            var previousRightArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_RIGHT);
+            var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var rightArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_RIGHT);
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
             dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
@@ -53,10 +61,10 @@ namespace SyncSharkEngine.Tests
         public void Compare_ShouldDeleteFileOnRightWhenAddedToTheRight()
         {
             // Arrange
-            var previousLeftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT);
-            var previousRightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT);
-            var leftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT);
-            var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var previousLeftArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_LEFT);
+            var previousRightArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_RIGHT);
+            var leftArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_LEFT);
+            var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
             dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
@@ -81,10 +89,10 @@ namespace SyncSharkEngine.Tests
         public void Compare_ShouldCopyFileLeftToRightWhenRightIsNewer()
         {
             // Arrange
-            var previousLeftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var previousRightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var leftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 1));
+            var previousLeftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 1));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
             dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
@@ -109,10 +117,10 @@ namespace SyncSharkEngine.Tests
         public void Compare_ShouldCopyFileLeftToRightWhenWhenLeftIsNewer()
         {
             // Arrange
-            var previousLeftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var previousRightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var leftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 1));
-            var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var previousLeftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 1));
+            var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
             dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
@@ -137,10 +145,10 @@ namespace SyncSharkEngine.Tests
         public void Compare_ShouldDoNothingWhenTheFilesHaveTheSameLastWriteTimeUtc()
         {
             // Arrange
-            var previousLeftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var previousRightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var leftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var previousLeftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
             dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
@@ -163,10 +171,10 @@ namespace SyncSharkEngine.Tests
         public void Compare_ShouldCopyFileLeftToRightIfDeletedFromRight()
         {
             // Arrange
-            var previousLeftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var previousRightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var leftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT);
+            var previousLeftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var rightArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_RIGHT);
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
             dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
@@ -191,10 +199,10 @@ namespace SyncSharkEngine.Tests
         public void Compare_ShouldDeleteRightFileIfDeletedFromLeft()
         {
             // Arrange
-            var previousLeftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var previousRightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-            var leftArgs = new CompareTestArgs(DIRECTORY_PATH_LEFT);
-            var rightArgs = new CompareTestArgs(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var previousLeftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
+            var leftArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_LEFT);
+            var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
 
             var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
             dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);

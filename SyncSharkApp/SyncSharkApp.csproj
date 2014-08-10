@@ -56,6 +56,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SyncSharkEngine.Tests\SyncSharkEngine.Tests.csproj">
+      <Project>{ab714f28-0d81-4004-9e4e-526c48f0e5ed}</Project>
+      <Name>SyncSharkEngine.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SyncSharkEngine\SyncSharkEngine.csproj">
       <Project>{52caff30-eeea-402e-9968-1fe1ccaa2599}</Project>
       <Name>SyncSharkEngine</Name>

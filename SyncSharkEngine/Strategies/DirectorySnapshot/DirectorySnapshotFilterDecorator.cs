@@ -21,30 +21,30 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
             m_ExcludedFileNames.Add(@"\SharkSync\");
         }
 
-        public Dictionary<string, IFileInfo> Create(IDirectoryInfo directoryInfo)
+        public Dictionary<string, IFileSystemInfo> Create(IDirectoryInfo directoryInfo)
         {
             var dictionary = m_DirectorySnapshotStrategy.Create(directoryInfo);
             var filteredDictionary = FilterDictionary(dictionary);
             return filteredDictionary;
         }
 
-        public Dictionary<string, IFileInfo> Read(IDirectoryInfo directoryInfo)
+        public Dictionary<string, IFileSystemInfo> Read(IDirectoryInfo directoryInfo)
         {
             var dictionary = m_DirectorySnapshotStrategy.Read(directoryInfo);
             var filteredDictionary = FilterDictionary(dictionary);
             return filteredDictionary;
         }
 
-        public Dictionary<string, IFileInfo> Update(IDirectoryInfo directoryInfo)
+        public Dictionary<string, IFileSystemInfo> Update(IDirectoryInfo directoryInfo)
         {
             var dictionary = m_DirectorySnapshotStrategy.Update(directoryInfo);
             var filteredDictionary = FilterDictionary(dictionary);
             return filteredDictionary;
         }
 
-        private Dictionary<string, IFileInfo> FilterDictionary(Dictionary<string, IFileInfo> dictionary)
+        private Dictionary<string, IFileSystemInfo> FilterDictionary(Dictionary<string, IFileSystemInfo> dictionary)
         {
-            Dictionary<string, IFileInfo> filteredDictionary = new Dictionary<string, IFileInfo>(dictionary);
+            Dictionary<string, IFileSystemInfo> filteredDictionary = new Dictionary<string, IFileSystemInfo>(dictionary);
             string[] keys = filteredDictionary.Keys.ToArray();
             foreach (var relativePath in keys)
             {

@@ -39,11 +39,22 @@ namespace SyncSharkEngine.Strategies
                     case FileActions.NONE:
                         break;
                     case FileActions.COPY:
-                        syncWorkItem.Destination.Delete();
-                        using (Stream readStream = syncWorkItem.Source.OpenRead())
-                        using (Stream writeStream = syncWorkItem.Destination.OpenWrite())
+                        if (syncWorkItem.Destination is IFileInfo)
                         {
-                            readStream.CopyTo(writeStream);
+                            IFileInfo source = syncWorkItem.Source as IFileInfo;
+                            IFileInfo destination = syncWorkItem.Destination as IFileInfo;
+
+                            syncWorkItem.Destination.Delete();
+                            using (Stream readStream = source.OpenRead())
+                            using (Stream writeStream = destination.OpenWrite())
+                            {
+                                readStream.CopyTo(writeStream);
+                            }
+                        }
+                        else if (syncWorkItem.Destination is IDirectoryInfo)
+                        {
+                            IDirectoryInfo destination = syncWorkItem.Destination as IDirectoryInfo;
+                            destination.Create();
                         }
                         break;
                     case FileActions.DELETE:

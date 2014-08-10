@@ -13,7 +13,7 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
 {
     public class FileSystemSnapshotStrategy : IDirectorySnapshotStrategy
     {
-        public const string STORE_FILE_NAME = @"\sync.ss_db";
+        public const string STORE_FILE_NAME = @"sync.ss_db";
 
         private IDirectorySnapshotStrategy m_DirectorySnapshotStrategy;
 
@@ -22,26 +22,26 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
             m_DirectorySnapshotStrategy = inMemorySnapshotStrategy;
         }
 
-        public Dictionary<string, IFileInfo> Create(IDirectoryInfo directoryInfo)
+        public Dictionary<string, IFileSystemInfo> Create(IDirectoryInfo directoryInfo)
         {
             var snapShot = m_DirectorySnapshotStrategy.Create(directoryInfo);
             SaveToDisk(directoryInfo, snapShot);
             return snapShot;
         }
 
-        public Dictionary<string, IFileInfo> Read(IDirectoryInfo directoryInfo)
+        public Dictionary<string, IFileSystemInfo> Read(IDirectoryInfo directoryInfo)
         {
             return LoadFromDisk(directoryInfo);
         }
 
-        public Dictionary<string, IFileInfo> Update(IDirectoryInfo directoryInfo)
+        public Dictionary<string, IFileSystemInfo> Update(IDirectoryInfo directoryInfo)
         {
             var snapshot = m_DirectorySnapshotStrategy.Update(directoryInfo);
             SaveToDisk(directoryInfo, snapshot);
             return snapshot;
         }
 
-        private void SaveToDisk(IDirectoryInfo directoryInfo, Dictionary<string, IFileInfo> dictionary)
+        private void SaveToDisk(IDirectoryInfo directoryInfo, Dictionary<string, IFileSystemInfo> dictionary)
         {
             string filePath = Path.Combine(directoryInfo.FullName, STORE_FILE_NAME);
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
@@ -53,9 +53,9 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
             }
         }
 
-        private Dictionary<string, IFileInfo> LoadFromDisk(IDirectoryInfo directoryInfo)
+        private Dictionary<string, IFileSystemInfo> LoadFromDisk(IDirectoryInfo directoryInfo)
         {
-            var directoryStore = new Dictionary<string, IFileInfo>();
+            var directoryStore = new Dictionary<string, IFileSystemInfo>();
             string filePath = Path.Combine(directoryInfo.FullName, STORE_FILE_NAME);
             if (File.Exists(filePath))
             {
@@ -64,7 +64,7 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
                     BinaryFormatter binaryFormatter = new BinaryFormatter();
                     using (Stream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
                     {
-                        directoryStore = (Dictionary<string, IFileInfo>)binaryFormatter.Deserialize(stream);
+                        directoryStore = (Dictionary<string, IFileSystemInfo>)binaryFormatter.Deserialize(stream);
                     }
                 }
                 catch (SerializationException ex)

@@ -10,18 +10,18 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
 {
     public class MemorySnapshotStrategy : IDirectorySnapshotStrategy
     {
-        private Dictionary<string, Dictionary<string, IFileInfo>> m_InMemoryStore;
+        private Dictionary<string, Dictionary<string, IFileSystemInfo>> m_InMemoryStore;
 
         public MemorySnapshotStrategy()
         {
-            m_InMemoryStore = new Dictionary<string, Dictionary<string, IFileInfo>>();
+            m_InMemoryStore = new Dictionary<string, Dictionary<string, IFileSystemInfo>>();
         }
 
-        public Dictionary<string, IFileInfo> Create(IDirectoryInfo directoryInfo)
+        public Dictionary<string, IFileSystemInfo> Create(IDirectoryInfo directoryInfo)
         {
-            Dictionary<string, IFileInfo> dicionary = new Dictionary<string, IFileInfo>();
+            Dictionary<string, IFileSystemInfo> dicionary = new Dictionary<string, IFileSystemInfo>();
             m_InMemoryStore.Add(directoryInfo.FullName, dicionary);
-            foreach (var fileInfo in directoryInfo.GetFiles("*.*", SearchOption.AllDirectories))
+            foreach (var fileInfo in directoryInfo.GetFileSystemInfos())
             {
                 string relativePath = fileInfo.FullName.Replace(directoryInfo.FullName, "");
                 dicionary.Add(relativePath, fileInfo);
@@ -29,7 +29,7 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
             return dicionary;
         }
 
-        public Dictionary<string, IFileInfo> Read(IDirectoryInfo directoryInfo)
+        public Dictionary<string, IFileSystemInfo> Read(IDirectoryInfo directoryInfo)
         {
             if (Exists(directoryInfo))
             {
@@ -37,11 +37,11 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
             }
             else
             {
-                return new Dictionary<string, IFileInfo>();
+                return new Dictionary<string, IFileSystemInfo>();
             }
         }
 
-        public Dictionary<string, IFileInfo> Update(IDirectoryInfo directoryInfo)
+        public Dictionary<string, IFileSystemInfo> Update(IDirectoryInfo directoryInfo)
         {
             if (Exists(directoryInfo))
             {

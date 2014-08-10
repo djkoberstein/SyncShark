@@ -9,6 +9,7 @@ namespace SyncSharkEngine.FileSystem
 {
     public interface IDirectoryInfo : IFileSystemInfo
     {
-        IEnumerable<IFileInfo> GetFiles(string searchPattern, SearchOption searchOption);
+        IEnumerable<IFileSystemInfo> GetFileSystemInfos();
+        void Create();
     }
 }

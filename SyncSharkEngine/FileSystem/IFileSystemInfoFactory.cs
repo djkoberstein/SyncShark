@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SyncSharkEngine.FileSystem
 {
-    public interface IFileSystemInfo
+    public interface IFileSystemInfoFactory
     {
-        string FullName { get; }
-        DateTime LastWriteTimeUtc { get; }
-        void Delete();
+        IFileSystemInfo GetFileSystemInfo(string path, bool isDirectory);
     }
 }

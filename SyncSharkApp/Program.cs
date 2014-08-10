@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using SyncSharkEngine.Strategies.Compare;
 using SyncSharkEngine.Strategies.DirectorySnapshot;
 using SyncSharkEngine.Strategies;
+using SyncSharkEngine.Tests.Compare;
 
 namespace SyncSharkApp
 {

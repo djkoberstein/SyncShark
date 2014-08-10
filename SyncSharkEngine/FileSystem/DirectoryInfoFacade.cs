@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SyncSharkEngine.FileSystem
 {
+    [Serializable]
     public class DirectoryInfoFacade : IDirectoryInfo
     {
         private DirectoryInfo m_DirectoryInfo;
@@ -18,9 +19,13 @@ namespace SyncSharkEngine.FileSystem
 
         public string FullName { get { return m_DirectoryInfo.FullName; } }
 
-        public IEnumerable<IFileInfo> GetFiles(string searchPattern, SearchOption searchOption)
+        IEnumerable<IFileSystemInfo> IDirectoryInfo.GetFileSystemInfos()
         {
-            foreach (FileInfo fileInfo in m_DirectoryInfo.GetFiles(searchPattern, searchOption))
+            foreach (var directoryInfo in m_DirectoryInfo.EnumerateDirectories())
+            {
+                yield return new DirectoryInfoFacade(directoryInfo);
+            }
+            foreach (FileInfo fileInfo in m_DirectoryInfo.GetFiles("*.*", SearchOption.AllDirectories))
             {
                 yield return new FileInfoFacade(new FileInfo(fileInfo.FullName));
             }
@@ -34,7 +39,13 @@ namespace SyncSharkEngine.FileSystem
 
         public void Delete()
         {
-            m_DirectoryInfo.Delete();
+            m_DirectoryInfo.Delete(true);
+            
+        }
+
+        public void Create()
+        {
+            m_DirectoryInfo.Create();
         }
     }
 }

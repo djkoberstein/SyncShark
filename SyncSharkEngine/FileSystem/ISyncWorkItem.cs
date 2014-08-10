@@ -9,8 +9,8 @@ namespace SyncSharkEngine.FileSystem
 {
     public interface ISyncWorkItem
     {
-        IFileInfo Source { get; }
-        IFileInfo Destination { get; }
+        IFileSystemInfo Source { get; }
+        IFileSystemInfo Destination { get; }
         FileActions FileAction { get; }
     }
 }

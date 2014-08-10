@@ -9,8 +9,8 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
 {
     public interface IDirectorySnapshotStrategy
     {
-        Dictionary<string, IFileInfo> Create(IDirectoryInfo directoryInfo);
-        Dictionary<string, IFileInfo> Read(IDirectoryInfo directoryInfo);
-        Dictionary<string, IFileInfo> Update(IDirectoryInfo directoryInfo);
+        Dictionary<string, IFileSystemInfo> Create(IDirectoryInfo directoryInfo);
+        Dictionary<string, IFileSystemInfo> Read(IDirectoryInfo directoryInfo);
+        Dictionary<string, IFileSystemInfo> Update(IDirectoryInfo directoryInfo);
     }
 }

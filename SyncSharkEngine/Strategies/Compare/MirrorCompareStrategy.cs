@@ -20,8 +20,8 @@ namespace SyncSharkEngine.Strategies.Compare
 
         public IEnumerable<ISyncWorkItem> Compare(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
         {
-            Dictionary<string, IFileInfo> leftSnapshot = m_DirectorySnapshotStrategy.Update(leftDirectoryInfo);
-            Dictionary<string, IFileInfo> rightSnapshot = m_DirectorySnapshotStrategy.Update(rightDirectoryInfo);
+            Dictionary<string, IFileSystemInfo> leftSnapshot = m_DirectorySnapshotStrategy.Update(leftDirectoryInfo);
+            Dictionary<string, IFileSystemInfo> rightSnapshot = m_DirectorySnapshotStrategy.Update(rightDirectoryInfo);
 
             foreach (var kvp in leftSnapshot)
             {
@@ -44,7 +44,7 @@ namespace SyncSharkEngine.Strategies.Compare
             yield break;
         }
 
-        private ISyncWorkItem ProcessFileFoundInBothFolders(IFileInfo leftFileInfo, IFileInfo rightFileInfo)
+        private ISyncWorkItem ProcessFileFoundInBothFolders(IFileSystemInfo leftFileInfo, IFileSystemInfo rightFileInfo)
         {
             if (leftFileInfo.LastWriteTimeUtc != rightFileInfo.LastWriteTimeUtc)
             {
@@ -56,7 +56,7 @@ namespace SyncSharkEngine.Strategies.Compare
             }
         }
 
-        private ISyncWorkItem ProcessFileFoundOnlyInLeftFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileInfo leftFileInfo)
+        private ISyncWorkItem ProcessFileFoundOnlyInLeftFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileSystemInfo leftFileInfo)
         {
             string relativePath = leftFileInfo.FullName.Replace(leftDirectoryInfo.FullName, "");
             string rightFullPath = rightDirectoryInfo.FullName + relativePath;
@@ -64,7 +64,7 @@ namespace SyncSharkEngine.Strategies.Compare
             return new SyncWorkItem(leftFileInfo, rightFileInfo, FileActions.COPY);
         }
 
-        private ISyncWorkItem ProcessFileFoundOnlyInRightFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileInfo rightFileInfo)
+        private ISyncWorkItem ProcessFileFoundOnlyInRightFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileSystemInfo rightFileInfo)
         {
             string relativePath = rightFileInfo.FullName.Replace(rightDirectoryInfo.FullName, "");
             string leftFullPath = leftDirectoryInfo.FullName + relativePath;
