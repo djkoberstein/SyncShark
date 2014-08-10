@@ -18,36 +18,16 @@ namespace SyncSharkApp
         {
             try
             {
-                ISyncSharkService syncSharkService = Compose();
+                SyncSharkFactory syncSharkServiceFactory = new SyncSharkFactory();
+                SyncSharkUI syncSharkUI = syncSharkServiceFactory.GetSyncShark();
+                syncSharkUI.Run(args);
 
-                IDirectoryInfo leftDirectoryInfo = new DirectoryInfoFacade(new DirectoryInfo(args[0]));
-                IDirectoryInfo rightDirectoryInfo = new DirectoryInfoFacade(new DirectoryInfo(args[1]));
-                syncSharkService.Mirror(leftDirectoryInfo, rightDirectoryInfo);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 Console.ReadLine();
             }
-        }
-
-        static ISyncSharkService Compose()
-        {
-            // Mirror components
-            MemorySnapshotStrategy memorySnapshotStrategy = new MemorySnapshotStrategy();
-            ICompareStrategy mirrorCompareStrategy = new MirrorCompareStrategy(memorySnapshotStrategy);
-            IExecuteStrategy mirrorExecuteStrategy = new ExecuteStrategy(mirrorCompareStrategy);
-
-            // Sync components
-            IDirectorySnapshotStrategy fileSystemSnapshotStrategy = new FileSystemSnapshotStrategy(memorySnapshotStrategy);
-            IDirectorySnapshotStrategy appFileFilter = new DirectorySnapshotFilterDecorator(fileSystemSnapshotStrategy);
-            ICompareStrategy syncCompareStrategy = new SyncCompareStrategy(appFileFilter);
-            IExecuteStrategy syncExecuteStrategy = new ExecuteStrategy(syncCompareStrategy);
-            
-            // Service
-            ISyncSharkService syncSharkService = new SyncSharkService(syncExecuteStrategy, mirrorExecuteStrategy);
-            
-            return syncSharkService;
         }
     }
 }
