@@ -32,7 +32,7 @@ namespace SyncSharkApp
             usage.AppendLine(@"usage: SyncSharkApp [-l <dirPath>] [-r <dirPath>] [-s] [-m]");
             usage.AppendLine(@"  -l or -left     Specify the left directory path");
             usage.AppendLine(@"  -r or -right    Specify the right directory path");
-            usage.AppendLine(@"  -s or -sync     Syncronizes changes in both directories");
+            usage.AppendLine(@"  -s or -sync     Syncronizes changes in both directories. (Default)");
             usage.AppendLine(@"  -m or -mirror   Mirrors files from the left directory to the right directory");
             return usage.ToString();
         }
