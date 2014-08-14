@@ -15,9 +15,12 @@ namespace SyncSharkEngine.FileSystem
         public DirectoryInfoFacade(DirectoryInfo directoryInfo)
         {
             m_DirectoryInfo = directoryInfo;
+            FullName = m_DirectoryInfo.FullName;
+            LastWriteTimeUtc = m_DirectoryInfo.LastWriteTimeUtc;
         }
 
-        public string FullName { get { return m_DirectoryInfo.FullName; } }
+        public string FullName { get; set; }
+        public DateTime LastWriteTimeUtc { get; set; }
 
         IEnumerable<IFileSystemInfo> IDirectoryInfo.GetFileSystemInfos()
         {
@@ -30,22 +33,6 @@ namespace SyncSharkEngine.FileSystem
                 yield return new FileInfoFacade(new FileInfo(fileInfo.FullName));
             }
             yield break;
-        }
-
-        public DateTime LastWriteTimeUtc
-        {
-            get { return m_DirectoryInfo.LastWriteTimeUtc; }
-        }
-
-        public void Delete()
-        {
-            m_DirectoryInfo.Delete(true);
-            
-        }
-
-        public void Create()
-        {
-            m_DirectoryInfo.Create();
         }
     }
 }

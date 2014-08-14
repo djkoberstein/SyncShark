@@ -12,10 +12,12 @@ namespace SyncSharkEngine.Strategies
     public class ExecuteStrategy : IExecuteStrategy
     {
         private ICompareStrategy m_CompareStrategy;
+        private IFileSystem m_FileSystem;
 
-        public ExecuteStrategy(ICompareStrategy compareStrategy)
+        public ExecuteStrategy(IFileSystem fileSystem, ICompareStrategy compareStrategy)
         {
             m_CompareStrategy = compareStrategy;
+            m_FileSystem = fileSystem;
         }
 
 
@@ -44,9 +46,9 @@ namespace SyncSharkEngine.Strategies
                             IFileInfo source = syncWorkItem.Source as IFileInfo;
                             IFileInfo destination = syncWorkItem.Destination as IFileInfo;
 
-                            syncWorkItem.Destination.Delete();
-                            using (Stream readStream = source.OpenRead())
-                            using (Stream writeStream = destination.OpenWrite())
+                            m_FileSystem.Delete(destination);
+                            using (Stream readStream = m_FileSystem.OpenRead(source))
+                            using (Stream writeStream = m_FileSystem.OpenWrite(destination))
                             {
                                 readStream.CopyTo(writeStream);
                             }
@@ -54,11 +56,11 @@ namespace SyncSharkEngine.Strategies
                         else if (syncWorkItem.Destination is IDirectoryInfo)
                         {
                             IDirectoryInfo destination = syncWorkItem.Destination as IDirectoryInfo;
-                            destination.Create();
+                            m_FileSystem.Create(destination);
                         }
                         break;
                     case FileActions.DELETE:
-                        syncWorkItem.Destination.Delete();
+                        m_FileSystem.Delete(syncWorkItem.Destination);
                         break;
                     case FileActions.CONFLICT:
                         break;

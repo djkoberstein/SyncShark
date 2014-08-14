@@ -41,13 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileSystem\FileSystemInfoFactory.cs" />
+    <Compile Include="FileSystem\IFileSystem.cs" />
     <Compile Include="FileSystem\IFileSystemInfoFactory.cs" />
+    <Compile Include="FileSystem\LocalFileSystem.cs" />
     <Compile Include="Strategies\Compare\MirrorCompareStrategy.cs" />
     <Compile Include="Strategies\Compare\SyncCompareStrategy.cs" />
     <Compile Include="FileSystem\DirectoryInfoFacade.cs" />
     <Compile Include="FileSystem\FileActions.cs" />
     <Compile Include="FileSystem\FileInfoFacade.cs" />
-    <Compile Include="FileSystem\FileSystemInfoFacade.cs" />
     <Compile Include="FileSystem\IDirectoryInfo.cs" />
     <Compile Include="FileSystem\IFileInfo.cs" />
     <Compile Include="FileSystem\IFileSystemInfo.cs" />

@@ -10,6 +10,5 @@ namespace SyncSharkEngine.FileSystem
     public interface IDirectoryInfo : IFileSystemInfo
     {
         IEnumerable<IFileSystemInfo> GetFileSystemInfos();
-        void Create();
     }
 }

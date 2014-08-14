@@ -15,17 +15,19 @@ namespace SyncSharkEngine
     {
         public SyncSharkUI GetSyncShark()
         {
+            IFileSystem fileSystem = new LocalFileSystem(); 
+
             // Mirror components
             MemorySnapshotStrategy memorySnapshotStrategy = new MemorySnapshotStrategy();
             ICompareStrategy mirrorCompareStrategy = new MirrorCompareStrategy(memorySnapshotStrategy);
-            IExecuteStrategy mirrorExecuteStrategy = new ExecuteStrategy(mirrorCompareStrategy);
+            IExecuteStrategy mirrorExecuteStrategy = new ExecuteStrategy(fileSystem, mirrorCompareStrategy);
 
             // Sync components
             IDirectorySnapshotStrategy fileSystemSnapshotStrategy = new FileSystemSnapshotStrategy(memorySnapshotStrategy);
             IDirectorySnapshotStrategy appFileFilter = new DirectorySnapshotFilterDecorator(fileSystemSnapshotStrategy);
             IFileSystemInfoFactory fileSystemInfoFactory = new FileSystemInfoFactory();
             ICompareStrategy syncCompareStrategy = new SyncCompareStrategy(appFileFilter, fileSystemInfoFactory);
-            IExecuteStrategy syncExecuteStrategy = new ExecuteStrategy(syncCompareStrategy);
+            IExecuteStrategy syncExecuteStrategy = new ExecuteStrategy(fileSystem, syncCompareStrategy);
 
             // Service
             ISyncSharkService syncSharkService = new SyncSharkService(syncExecuteStrategy, mirrorExecuteStrategy);

@@ -9,7 +9,5 @@ namespace SyncSharkEngine.FileSystem
 {
     public interface IFileInfo : IFileSystemInfo
     {
-        Stream OpenRead();
-        Stream OpenWrite();
     }
 }

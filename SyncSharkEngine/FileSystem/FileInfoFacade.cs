@@ -33,22 +33,5 @@ namespace SyncSharkEngine.FileSystem
                 m_FileInfo.LastWriteTimeUtc = value;
             }
         }
-
-        public Stream OpenRead()
-        {
-            return m_FileInfo.OpenRead();
-        }
-
-        public Stream OpenWrite()
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(FullName));
-            return m_FileInfo.OpenWrite();
-        }
-
-        public void Delete()
-        {
-            if (m_FileInfo.Exists)
-                m_FileInfo.Delete();
-        }
     }
 }
