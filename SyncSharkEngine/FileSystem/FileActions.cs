@@ -11,6 +11,7 @@ namespace SyncSharkEngine.FileSystem
         NONE,
         COPY,
         DELETE,
-        CONFLICT
+        CONFLICT,
+        MOVE
     }
 }
