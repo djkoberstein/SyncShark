@@ -41,9 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileSystem\FileSystemInfoFactory.cs" />
-    <Compile Include="FileSystem\IFileSystem.cs" />
     <Compile Include="FileSystem\IFileSystemInfoFactory.cs" />
-    <Compile Include="FileSystem\LocalFileSystem.cs" />
     <Compile Include="Strategies\Compare\MirrorCompareStrategy.cs" />
     <Compile Include="Strategies\Compare\SyncCompareStrategy.cs" />
     <Compile Include="FileSystem\DirectoryInfoFacade.cs" />
@@ -54,7 +52,7 @@
     <Compile Include="FileSystem\IFileSystemInfo.cs" />
     <Compile Include="FileSystem\ISyncWorkItem.cs" />
     <Compile Include="FileSystem\SyncWorkItem.cs" />
-    <Compile Include="Strategies\DirectorySnapshot\DirectorySnapshotFilterDecorator.cs" />
+    <Compile Include="Strategies\DirectorySnapshot\DirectorySnapshotBlacklistFilter.cs" />
     <Compile Include="Strategies\DirectorySnapshot\FileSystemSnapshotStrategy.cs" />
     <Compile Include="Strategies\Compare\ICompareStrategy.cs" />
     <Compile Include="Strategies\DirectorySnapshot\IDirectorySnapshotStrategy.cs" />

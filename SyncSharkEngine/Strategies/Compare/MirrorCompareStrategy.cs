@@ -12,10 +12,12 @@ namespace SyncSharkEngine.Strategies.Compare
     public class MirrorCompareStrategy : ICompareStrategy
     {
         private IDirectorySnapshotStrategy m_DirectorySnapshotStrategy;
+        private IFileSystemInfoFactory m_FileSystemInfoFactory;
 
-        public MirrorCompareStrategy(IDirectorySnapshotStrategy directorySnapshotStrategy)
+        public MirrorCompareStrategy(IDirectorySnapshotStrategy directorySnapshotStrategy, IFileSystemInfoFactory fileSystemInfoFactory)
         {
             m_DirectorySnapshotStrategy = directorySnapshotStrategy;
+            m_FileSystemInfoFactory = fileSystemInfoFactory;
         }
 
         public IEnumerable<ISyncWorkItem> Compare(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
@@ -56,20 +58,16 @@ namespace SyncSharkEngine.Strategies.Compare
             }
         }
 
-        private ISyncWorkItem ProcessFileFoundOnlyInLeftFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileSystemInfo leftFileInfo)
+        private ISyncWorkItem ProcessFileFoundOnlyInLeftFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileSystemInfo leftFileSystemInfo)
         {
-            string relativePath = leftFileInfo.FullName.Replace(leftDirectoryInfo.FullName, "");
-            string rightFullPath = rightDirectoryInfo.FullName + relativePath;
-            IFileInfo rightFileInfo = new FileInfoFacade(new FileInfo(rightFullPath));
-            return new SyncWorkItem(leftFileInfo, rightFileInfo, FileActions.COPY);
+            IFileSystemInfo rightFileSystemInfo = m_FileSystemInfoFactory.GetOtherFileSystemInfo(leftDirectoryInfo, rightDirectoryInfo, leftFileSystemInfo);
+            return new SyncWorkItem(leftFileSystemInfo, rightFileSystemInfo, FileActions.COPY);
         }
 
-        private ISyncWorkItem ProcessFileFoundOnlyInRightFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileSystemInfo rightFileInfo)
+        private ISyncWorkItem ProcessFileFoundOnlyInRightFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileSystemInfo rightFileSystemInfo)
         {
-            string relativePath = rightFileInfo.FullName.Replace(rightDirectoryInfo.FullName, "");
-            string leftFullPath = leftDirectoryInfo.FullName + relativePath;
-            IFileInfo leftFileInfo = new FileInfoFacade(new FileInfo(leftFullPath));
-            return new SyncWorkItem(leftFileInfo, rightFileInfo, FileActions.DELETE);
+            IFileSystemInfo leftFileSystemInfo = m_FileSystemInfoFactory.GetOtherFileSystemInfo(rightDirectoryInfo, leftDirectoryInfo, rightFileSystemInfo);
+            return new SyncWorkItem(leftFileSystemInfo, rightFileSystemInfo, FileActions.DELETE);
         }
     }
 }

@@ -15,19 +15,18 @@ namespace SyncSharkEngine
     {
         public SyncSharkUI GetSyncShark()
         {
-            IFileSystem fileSystem = new LocalFileSystem(); 
+            IFileSystemInfoFactory fileSystemInfoFactory = new FileSystemInfoFactory();
 
             // Mirror components
             MemorySnapshotStrategy memorySnapshotStrategy = new MemorySnapshotStrategy();
-            ICompareStrategy mirrorCompareStrategy = new MirrorCompareStrategy(memorySnapshotStrategy);
-            IExecuteStrategy mirrorExecuteStrategy = new ExecuteStrategy(fileSystem, mirrorCompareStrategy);
+            ICompareStrategy mirrorCompareStrategy = new MirrorCompareStrategy(memorySnapshotStrategy, fileSystemInfoFactory);
+            IExecuteStrategy mirrorExecuteStrategy = new ExecuteStrategy(mirrorCompareStrategy);
 
             // Sync components
             IDirectorySnapshotStrategy fileSystemSnapshotStrategy = new FileSystemSnapshotStrategy(memorySnapshotStrategy);
-            IDirectorySnapshotStrategy appFileFilter = new DirectorySnapshotFilterDecorator(fileSystemSnapshotStrategy);
-            IFileSystemInfoFactory fileSystemInfoFactory = new FileSystemInfoFactory();
-            ICompareStrategy syncCompareStrategy = new SyncCompareStrategy(appFileFilter, fileSystemInfoFactory);
-            IExecuteStrategy syncExecuteStrategy = new ExecuteStrategy(fileSystem, syncCompareStrategy);
+            IDirectorySnapshotStrategy snapshotFilter = new DirectorySnapshotBlacklistFilter(fileSystemSnapshotStrategy);
+            ICompareStrategy syncCompareStrategy = new SyncCompareStrategy(snapshotFilter, fileSystemInfoFactory);
+            IExecuteStrategy syncExecuteStrategy = new ExecuteStrategy(syncCompareStrategy);
 
             // Service
             ISyncSharkService syncSharkService = new SyncSharkService(syncExecuteStrategy, mirrorExecuteStrategy);

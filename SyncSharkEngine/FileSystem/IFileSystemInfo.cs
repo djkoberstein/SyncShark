@@ -11,5 +11,6 @@ namespace SyncSharkEngine.FileSystem
     {
         string FullName { get; }
         DateTime LastWriteTimeUtc { get; }
+        void Delete();
     }
 }

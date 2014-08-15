@@ -4,21 +4,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SyncSharkEngine.Strategies.DirectorySnapshot
 {
-    public class DirectorySnapshotFilterDecorator : IDirectorySnapshotStrategy
+    public class DirectorySnapshotBlacklistFilter : IDirectorySnapshotStrategy
     {
         private IDirectorySnapshotStrategy m_DirectorySnapshotStrategy;
-        private List<string> m_ExcludedFileNames;
-        
-        public DirectorySnapshotFilterDecorator(IDirectorySnapshotStrategy directorySnapshotStrategy)
+        private List<Regex> m_BlackList;
+
+        public DirectorySnapshotBlacklistFilter(IDirectorySnapshotStrategy directorySnapshotStrategy)
+            : this(directorySnapshotStrategy, new List<Regex>())
+        {
+        }
+
+        public DirectorySnapshotBlacklistFilter(IDirectorySnapshotStrategy directorySnapshotStrategy, List<Regex> blackList)
         {
             m_DirectorySnapshotStrategy = directorySnapshotStrategy;
-            m_ExcludedFileNames = new List<string>();
-            m_ExcludedFileNames.Add(FileSystemSnapshotStrategy.STORE_FILE_NAME);
-            m_ExcludedFileNames.Add(@"\SharkSync\");
+            m_BlackList = new List<Regex>();
+            m_BlackList.Add(new Regex(@"^" + FileSystemSnapshotStrategy.STORE_FILE_NAME));
+            m_BlackList.AddRange(blackList);
         }
 
         public Dictionary<string, IFileSystemInfo> Create(IDirectoryInfo directoryInfo)
@@ -48,7 +54,7 @@ namespace SyncSharkEngine.Strategies.DirectorySnapshot
             string[] keys = filteredDictionary.Keys.ToArray();
             foreach (var relativePath in keys)
             {
-                if (m_ExcludedFileNames.Any(f => relativePath.StartsWith(f)))
+                if (m_BlackList.Any(regex => regex.IsMatch(relativePath)))
                 {
                     filteredDictionary.Remove(relativePath);
                 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,6 +34,16 @@ namespace SyncSharkEngine.FileSystem
                 yield return new FileInfoFacade(new FileInfo(fileInfo.FullName));
             }
             yield break;
+        }
+
+        public void Create()
+        {
+            m_DirectoryInfo.Create();
+        }
+
+        public void Delete()
+        {
+            m_DirectoryInfo.Delete(true);
         }
     }
 }

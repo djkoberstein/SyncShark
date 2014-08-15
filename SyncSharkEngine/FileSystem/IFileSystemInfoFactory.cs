@@ -8,6 +8,6 @@ namespace SyncSharkEngine.FileSystem
 {
     public interface IFileSystemInfoFactory
     {
-        IFileSystemInfo GetFileSystemInfo(string path, bool isDirectory);
+        IFileSystemInfo GetOtherFileSystemInfo(IDirectoryInfo side1DirectoryInfo, IDirectoryInfo side2DirectoryInfo, IFileSystemInfo side1FileInfo);
     }
 }

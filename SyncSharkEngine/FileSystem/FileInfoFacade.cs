@@ -33,5 +33,20 @@ namespace SyncSharkEngine.FileSystem
                 m_FileInfo.LastWriteTimeUtc = value;
             }
         }
+
+        public Stream OpenRead()
+        {
+            return m_FileInfo.OpenRead();
+        }
+
+        public Stream OpenWrite()
+        {
+            return m_FileInfo.OpenWrite();
+        }
+
+        public void Delete()
+        {
+            m_FileInfo.Delete();
+        }
     }
 }

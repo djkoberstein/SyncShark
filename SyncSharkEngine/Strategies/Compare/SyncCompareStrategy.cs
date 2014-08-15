@@ -64,26 +64,22 @@ namespace SyncSharkEngine.Strategies.Compare
             }
         }
 
-        private ISyncWorkItem ProcessFileFoundOnlyInLeftFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileSystemInfo LeftFileSystemInfo, bool foundInPreviousLeftSnapshot)
+        private ISyncWorkItem ProcessFileFoundOnlyInLeftFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileSystemInfo leftFileSystemInfo, bool foundInPreviousLeftSnapshot)
         {
-            string relativePath = LeftFileSystemInfo.FullName.Replace(leftDirectoryInfo.FullName, "");
-            string rightFullPath = rightDirectoryInfo.FullName + relativePath;
-            IFileSystemInfo rightFileSystemInfo = m_FileSystemInfoFactory.GetFileSystemInfo(rightFullPath, LeftFileSystemInfo is IDirectoryInfo);
+            IFileSystemInfo rightFileSystemInfo = m_FileSystemInfoFactory.GetOtherFileSystemInfo(leftDirectoryInfo, rightDirectoryInfo, leftFileSystemInfo);
             if (foundInPreviousLeftSnapshot)
             {
-                return new SyncWorkItem(rightFileSystemInfo, LeftFileSystemInfo, FileActions.DELETE);
+                return new SyncWorkItem(rightFileSystemInfo, leftFileSystemInfo, FileActions.DELETE);
             }
             else
             {
-                return new SyncWorkItem(LeftFileSystemInfo, rightFileSystemInfo, FileActions.COPY);
+                return new SyncWorkItem(leftFileSystemInfo, rightFileSystemInfo, FileActions.COPY);
             }
         }
 
         private ISyncWorkItem ProcessFileFoundOnlyInRightFolder(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo, IFileSystemInfo rightFileSystemInfo, bool foundInPreviousRightSnapshot)
         {
-            string relativePath = rightFileSystemInfo.FullName.Replace(rightDirectoryInfo.FullName, "");
-            string leftFullPath = leftDirectoryInfo.FullName + relativePath;
-            IFileSystemInfo leftFileSystemInfo = m_FileSystemInfoFactory.GetFileSystemInfo(leftFullPath, rightFileSystemInfo is IDirectoryInfo);
+            IFileSystemInfo leftFileSystemInfo = m_FileSystemInfoFactory.GetOtherFileSystemInfo(rightDirectoryInfo, leftDirectoryInfo, rightFileSystemInfo);
             if (foundInPreviousRightSnapshot)
             {
                 return new SyncWorkItem(leftFileSystemInfo, rightFileSystemInfo, FileActions.DELETE);

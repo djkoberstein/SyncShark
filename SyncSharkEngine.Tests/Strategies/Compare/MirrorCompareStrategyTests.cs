@@ -29,6 +29,17 @@ namespace SyncSharkEngine.Tests.Compare
             m_CompareTestArgsFactory = new CompareTestArgsFactory();
         }
 
+        private MirrorCompareStrategy GetMirrorCompareStrategy(CompareTestArgs previousLeftArgs, CompareTestArgs previousRightArgs, CompareTestArgs leftArgs, CompareTestArgs rightArgs)
+        {
+            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
+            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
+            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
+            FileSystemInfoFactory fileSystemInfoFactory = new FileSystemInfoFactory();
+            return new MirrorCompareStrategy(dictionarySnapShotService.Object, fileSystemInfoFactory);
+        }
+
         [Test]
         public void Compare_ShouldCopyFileLeftToRightWhenAddedToTheLeft()
         {
@@ -37,14 +48,7 @@ namespace SyncSharkEngine.Tests.Compare
             var previousRightArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_RIGHT);
             var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var rightArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_RIGHT);
-
-            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
-
-            var compareService = new MirrorCompareStrategy(dictionarySnapShotService.Object);
+            var compareService = GetMirrorCompareStrategy(previousLeftArgs, previousRightArgs, leftArgs, rightArgs);
 
             // Act
             var result = compareService.Compare(leftArgs.DirectoryInfo.Object, rightArgs.DirectoryInfo.Object);
@@ -65,14 +69,7 @@ namespace SyncSharkEngine.Tests.Compare
             var previousRightArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_RIGHT);
             var leftArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_LEFT);
             var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-
-            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
-
-            var compareService = new MirrorCompareStrategy(dictionarySnapShotService.Object);
+            var compareService = GetMirrorCompareStrategy(previousLeftArgs, previousRightArgs, leftArgs, rightArgs);
 
             // Act
             var result = compareService.Compare(leftArgs.DirectoryInfo.Object, rightArgs.DirectoryInfo.Object);
@@ -93,14 +90,7 @@ namespace SyncSharkEngine.Tests.Compare
             var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 1));
-
-            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
-
-            var compareService = new MirrorCompareStrategy(dictionarySnapShotService.Object);
+            var compareService = GetMirrorCompareStrategy(previousLeftArgs, previousRightArgs, leftArgs, rightArgs);
 
             // Act
             var result = compareService.Compare(leftArgs.DirectoryInfo.Object, rightArgs.DirectoryInfo.Object);
@@ -121,14 +111,7 @@ namespace SyncSharkEngine.Tests.Compare
             var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 1));
             var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-
-            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
-
-            var compareService = new MirrorCompareStrategy(dictionarySnapShotService.Object);
+            var compareService = GetMirrorCompareStrategy(previousLeftArgs, previousRightArgs, leftArgs, rightArgs);
 
             // Act
             var result = compareService.Compare(leftArgs.DirectoryInfo.Object, rightArgs.DirectoryInfo.Object);
@@ -149,14 +132,7 @@ namespace SyncSharkEngine.Tests.Compare
             var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-
-            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
-
-            var compareService = new MirrorCompareStrategy(dictionarySnapShotService.Object);
+            var compareService = GetMirrorCompareStrategy(previousLeftArgs, previousRightArgs, leftArgs, rightArgs);
 
             // Act
             var result = compareService.Compare(leftArgs.DirectoryInfo.Object, rightArgs.DirectoryInfo.Object);
@@ -175,14 +151,7 @@ namespace SyncSharkEngine.Tests.Compare
             var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var rightArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_RIGHT);
-
-            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
-
-            var compareService = new MirrorCompareStrategy(dictionarySnapShotService.Object);
+            var compareService = GetMirrorCompareStrategy(previousLeftArgs, previousRightArgs, leftArgs, rightArgs);
 
             // Act
             var result = compareService.Compare(leftArgs.DirectoryInfo.Object, rightArgs.DirectoryInfo.Object);
@@ -203,14 +172,7 @@ namespace SyncSharkEngine.Tests.Compare
             var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var leftArgs = m_CompareTestArgsFactory.GetEmptyDirectory(DIRECTORY_PATH_LEFT);
             var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-
-            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
-
-            var compareService = new MirrorCompareStrategy(dictionarySnapShotService.Object);
+            var compareService = GetMirrorCompareStrategy(previousLeftArgs, previousRightArgs, leftArgs, rightArgs);
 
             // Act
             var result = compareService.Compare(leftArgs.DirectoryInfo.Object, rightArgs.DirectoryInfo.Object);
@@ -231,14 +193,7 @@ namespace SyncSharkEngine.Tests.Compare
             var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH + ".obj", new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
-
-            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
-
-            var compareService = new MirrorCompareStrategy(dictionarySnapShotService.Object);
+            var compareService = GetMirrorCompareStrategy(previousLeftArgs, previousRightArgs, leftArgs, rightArgs);
 
             // Act
             var result = compareService.Compare(leftArgs.DirectoryInfo.Object, rightArgs.DirectoryInfo.Object);
@@ -259,14 +214,7 @@ namespace SyncSharkEngine.Tests.Compare
             var previousRightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var leftArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_LEFT, FILE_RELATIVE_PATH, new DateTime(2014, 01, 01, 0, 0, 0, 0));
             var rightArgs = m_CompareTestArgsFactory.GetSingleFile(DIRECTORY_PATH_RIGHT, FILE_RELATIVE_PATH + ".obj", new DateTime(2014, 01, 01, 0, 0, 0, 0));
-
-            var dictionarySnapShotService = new Mock<IDirectorySnapshotStrategy>();
-            dictionarySnapShotService.Setup(o => o.Read(leftArgs.DirectoryInfo.Object)).Returns(previousLeftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Read(rightArgs.DirectoryInfo.Object)).Returns(previousRightArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(leftArgs.DirectoryInfo.Object)).Returns(leftArgs.Snapshot);
-            dictionarySnapShotService.Setup(o => o.Update(rightArgs.DirectoryInfo.Object)).Returns(rightArgs.Snapshot);
-
-            var compareService = new MirrorCompareStrategy(dictionarySnapShotService.Object);
+            var compareService = GetMirrorCompareStrategy(previousLeftArgs, previousRightArgs, leftArgs, rightArgs);
 
             // Act
             var result = compareService.Compare(leftArgs.DirectoryInfo.Object, rightArgs.DirectoryInfo.Object);

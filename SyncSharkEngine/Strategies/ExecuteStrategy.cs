@@ -12,12 +12,10 @@ namespace SyncSharkEngine.Strategies
     public class ExecuteStrategy : IExecuteStrategy
     {
         private ICompareStrategy m_CompareStrategy;
-        private IFileSystem m_FileSystem;
 
-        public ExecuteStrategy(IFileSystem fileSystem, ICompareStrategy compareStrategy)
+        public ExecuteStrategy(ICompareStrategy compareStrategy)
         {
             m_CompareStrategy = compareStrategy;
-            m_FileSystem = fileSystem;
         }
 
 
@@ -41,26 +39,26 @@ namespace SyncSharkEngine.Strategies
                     case FileActions.NONE:
                         break;
                     case FileActions.COPY:
-                        if (syncWorkItem.Destination is IFileInfo)
+                        if (syncWorkItem.Source is IFileInfo)
                         {
                             IFileInfo source = syncWorkItem.Source as IFileInfo;
                             IFileInfo destination = syncWorkItem.Destination as IFileInfo;
 
-                            m_FileSystem.Delete(destination);
-                            using (Stream readStream = m_FileSystem.OpenRead(source))
-                            using (Stream writeStream = m_FileSystem.OpenWrite(destination))
+                            destination.Delete();
+                            using (Stream readStream = source.OpenRead())
+                            using (Stream writeStream = destination.OpenWrite())
                             {
                                 readStream.CopyTo(writeStream);
                             }
                         }
-                        else if (syncWorkItem.Destination is IDirectoryInfo)
+                        else
                         {
                             IDirectoryInfo destination = syncWorkItem.Destination as IDirectoryInfo;
-                            m_FileSystem.Create(destination);
+                            destination.Create();
                         }
                         break;
                     case FileActions.DELETE:
-                        m_FileSystem.Delete(syncWorkItem.Destination);
+                        syncWorkItem.Destination.Delete();
                         break;
                     case FileActions.CONFLICT:
                         break;

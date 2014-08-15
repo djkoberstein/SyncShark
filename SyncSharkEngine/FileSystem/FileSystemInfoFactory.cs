@@ -9,15 +9,18 @@ namespace SyncSharkEngine.FileSystem
 {
     public class FileSystemInfoFactory : IFileSystemInfoFactory
     {
-        public IFileSystemInfo GetFileSystemInfo(string path, bool isDirectory)
+        public IFileSystemInfo GetOtherFileSystemInfo(IDirectoryInfo side1DirectoryInfo, IDirectoryInfo side2DirectoryInfo, IFileSystemInfo side1FileInfo)
         {
-            if (isDirectory)
+            string relativePath = side1FileInfo.FullName.Replace(side1DirectoryInfo.FullName, "");
+            string rightFullPath = side2DirectoryInfo.FullName + relativePath;
+
+            if (side1FileInfo is IFileInfo)
             {
-                return new DirectoryInfoFacade(new DirectoryInfo(path));
+                return new FileInfoFacade(new FileInfo(rightFullPath));
             }
             else
             {
-                return new FileInfoFacade(new FileInfo(path));
+                return new DirectoryInfoFacade(new DirectoryInfo(rightFullPath));
             }
         }
     }
