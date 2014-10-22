@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyncSharkUI.cs" />
@@ -55,13 +56,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SyncShark.Engine\SyncShark.Engine.csproj">
+      <Project>{52caff30-eeea-402e-9968-1fe1ccaa2599}</Project>
+      <Name>SyncShark.Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SyncShark.Interfaces\SyncShark.Interfaces.csproj">
       <Project>{d68f89ab-aa84-44fe-af3a-d16efaeec0d7}</Project>
       <Name>SyncShark.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SyncSharkEngine\SyncShark.Engine.csproj">
-      <Project>{52caff30-eeea-402e-9968-1fe1ccaa2599}</Project>
-      <Name>SyncShark.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
