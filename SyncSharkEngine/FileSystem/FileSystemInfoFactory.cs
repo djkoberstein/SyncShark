@@ -1,11 +1,12 @@
-﻿using System;
+﻿using SyncShark.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkEngine.FileSystem
+namespace SyncShark.Engine.FileSystem
 {
     public class FileSystemInfoFactory : IFileSystemInfoFactory
     {

@@ -1,15 +1,16 @@
 ﻿using Moq;
 using NUnit.Framework;
-using SyncSharkEngine.FileSystem;
-using SyncSharkEngine.Strategies.DirectorySnapshot;
-using SyncSharkEngine.Tests.Strategies.Compare;
+using SyncShark.Engine.FileSystem;
+using SyncShark.Engine.Strategies.DirectorySnapshot;
+using SyncShark.Engine.Tests.Strategies.Compare;
+using SyncShark.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkEngine.Tests
+namespace SyncShark.Engine.Tests
 {
     [TestFixture]
     public class DirectorySnapshotBlacklistFilterTests

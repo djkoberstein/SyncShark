@@ -1,11 +1,10 @@
-﻿using SyncSharkEngine.FileSystem;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SyncSharkEngine.Strategies.Compare
+namespace SyncShark.Interfaces
 {
     public interface ICompareStrategy
     {

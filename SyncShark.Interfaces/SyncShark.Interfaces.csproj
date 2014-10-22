@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{52CAFF30-EEEA-402E-9968-1FE1CCAA2599}</ProjectGuid>
+    <ProjectGuid>{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SyncSharkEngine</RootNamespace>
-    <AssemblyName>SyncSharkEngine</AssemblyName>
+    <RootNamespace>SyncShark.Interfaces</RootNamespace>
+    <AssemblyName>SyncShark.Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,7 +32,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,30 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileSystem\FileSystemInfoFactory.cs" />
-    <Compile Include="FileSystem\IFileSystemInfoFactory.cs" />
-    <Compile Include="Strategies\Compare\MirrorCompareStrategy.cs" />
-    <Compile Include="Strategies\Compare\SyncCompareStrategy.cs" />
-    <Compile Include="FileSystem\DirectoryInfoFacade.cs" />
     <Compile Include="FileSystem\FileActions.cs" />
-    <Compile Include="FileSystem\FileInfoFacade.cs" />
     <Compile Include="FileSystem\IDirectoryInfo.cs" />
     <Compile Include="FileSystem\IFileInfo.cs" />
     <Compile Include="FileSystem\IFileSystemInfo.cs" />
+    <Compile Include="FileSystem\IFileSystemInfoFactory.cs" />
     <Compile Include="FileSystem\ISyncWorkItem.cs" />
-    <Compile Include="FileSystem\SyncWorkItem.cs" />
-    <Compile Include="Strategies\DirectorySnapshot\DirectorySnapshotBlacklistFilter.cs" />
-    <Compile Include="Strategies\DirectorySnapshot\FileSystemSnapshotStrategy.cs" />
-    <Compile Include="Strategies\Compare\ICompareStrategy.cs" />
-    <Compile Include="Strategies\DirectorySnapshot\IDirectorySnapshotStrategy.cs" />
+    <Compile Include="ISyncSharkFactory.cs" />
     <Compile Include="ISyncSharkService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\DirectorySnapshot\MemorySnapshotStrategy.cs" />
+    <Compile Include="Strategies\Compare\ICompareStrategy.cs" />
+    <Compile Include="Strategies\DirectorySnapshot\IDirectorySnapshotStrategy.cs" />
     <Compile Include="Strategies\IExecuteStrategy.cs" />
-    <Compile Include="Strategies\ExecuteStrategy.cs" />
-    <Compile Include="SyncSharkService.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

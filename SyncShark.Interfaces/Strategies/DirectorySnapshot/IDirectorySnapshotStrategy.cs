@@ -1,11 +1,10 @@
-﻿using SyncSharkEngine.FileSystem;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkEngine.Strategies.DirectorySnapshot
+namespace SyncShark.Interfaces
 {
     public interface IDirectorySnapshotStrategy
     {

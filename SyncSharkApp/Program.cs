@@ -1,17 +1,12 @@
-﻿using SyncSharkEngine;
-using SyncSharkEngine.FileSystem;
+﻿using SyncShark.Engine;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SyncSharkEngine.Strategies.Compare;
-using SyncSharkEngine.Strategies.DirectorySnapshot;
-using SyncSharkEngine.Strategies;
-using SyncSharkEngine.Tests.Compare;
 
-namespace SyncSharkApp
+namespace SyncShark.App
 {
     class Program
     {
@@ -19,10 +14,10 @@ namespace SyncSharkApp
         {
             try
             {
-                SyncSharkFactory syncSharkServiceFactory = new SyncSharkFactory();
-                SyncSharkUI syncSharkUI = syncSharkServiceFactory.GetSyncShark();
+                var syncSharkServiceFactory = new SyncSharkFactory();
+                var syncSharkService = syncSharkServiceFactory.GetSyncShark();
+                var syncSharkUI = new SyncSharkUI(syncSharkService);
                 syncSharkUI.Run(args);
-
             }
             catch (Exception ex)
             {

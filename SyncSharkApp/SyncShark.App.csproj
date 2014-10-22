@@ -7,8 +7,8 @@
     <ProjectGuid>{41959790-76AF-40D6-9E4D-77CB1ACEEC10}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SyncSharkApp</RootNamespace>
-    <AssemblyName>SyncSharkApp</AssemblyName>
+    <RootNamespace>SyncShark.App</RootNamespace>
+    <AssemblyName>SyncShark.App</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SyncSharkFactory.cs" />
     <Compile Include="SyncSharkUI.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,13 +55,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SyncSharkEngine.Tests\SyncSharkEngine.Tests.csproj">
-      <Project>{ab714f28-0d81-4004-9e4e-526c48f0e5ed}</Project>
-      <Name>SyncSharkEngine.Tests</Name>
+    <ProjectReference Include="..\SyncShark.Interfaces\SyncShark.Interfaces.csproj">
+      <Project>{d68f89ab-aa84-44fe-af3a-d16efaeec0d7}</Project>
+      <Name>SyncShark.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SyncSharkEngine\SyncSharkEngine.csproj">
+    <ProjectReference Include="..\SyncSharkEngine\SyncShark.Engine.csproj">
       <Project>{52caff30-eeea-402e-9968-1fe1ccaa2599}</Project>
-      <Name>SyncSharkEngine</Name>
+      <Name>SyncShark.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

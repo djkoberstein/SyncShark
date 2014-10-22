@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SyncShark.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkEngine.FileSystem
+namespace SyncShark.Engine.FileSystem
 {
     [Serializable]
     public class DirectoryInfoFacade : IDirectoryInfo

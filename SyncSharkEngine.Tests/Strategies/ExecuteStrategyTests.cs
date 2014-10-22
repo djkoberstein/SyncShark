@@ -1,8 +1,9 @@
 ﻿using Moq;
 using NUnit.Framework;
-using SyncSharkEngine.FileSystem;
-using SyncSharkEngine.Strategies;
-using SyncSharkEngine.Strategies.Compare;
+using SyncShark.Engine.FileSystem;
+using SyncShark.Engine.Strategies;
+using SyncShark.Engine.Strategies.Compare;
+using SyncShark.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;

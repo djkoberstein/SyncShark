@@ -1,4 +1,5 @@
-﻿using SyncSharkEngine.FileSystem;
+﻿using SyncShark.Interfaces;
+using SyncShark.Engine.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkEngine.Strategies.DirectorySnapshot
+namespace SyncShark.Engine.Strategies.DirectorySnapshot
 {
     public class MemorySnapshotStrategy : IDirectorySnapshotStrategy
     {

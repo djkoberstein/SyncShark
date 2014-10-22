@@ -1,14 +1,16 @@
 ﻿using Moq;
 using NUnit.Framework;
-using SyncSharkEngine.FileSystem;
+using SyncShark.Engine.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SyncSharkEngine.Strategies.Compare;
-using SyncSharkEngine.Strategies;
+using SyncShark.Engine.Strategies.Compare;
+using SyncShark.Engine.Strategies;
+using SyncShark.Interfaces;
+using SyncShark.Engine;
 
 namespace SyncSharkEngine.Tests
 {

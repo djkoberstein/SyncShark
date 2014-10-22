@@ -1,4 +1,4 @@
-﻿using SyncSharkEngine.FileSystem;
+﻿using SyncShark.Engine.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,8 +8,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using SyncShark.Interfaces;
 
-namespace SyncSharkEngine.Strategies.DirectorySnapshot
+namespace SyncShark.Engine.Strategies.DirectorySnapshot
 {
     public class FileSystemSnapshotStrategy : IDirectorySnapshotStrategy
     {

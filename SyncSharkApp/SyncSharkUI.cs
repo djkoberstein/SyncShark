@@ -1,6 +1,7 @@
 ﻿using CommandLine;
-using SyncSharkEngine;
-using SyncSharkEngine.FileSystem;
+using SyncShark.Engine;
+using SyncShark.Engine.FileSystem;
+using SyncShark.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkApp
+namespace SyncShark.App
 {
     public class Options 
     {

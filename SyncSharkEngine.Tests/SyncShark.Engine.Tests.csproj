@@ -7,8 +7,8 @@
     <ProjectGuid>{AB714F28-0D81-4004-9E4E-526C48F0E5ED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SyncSharkEngine.Tests</RootNamespace>
-    <AssemblyName>SyncSharkEngine.Tests</AssemblyName>
+    <RootNamespace>SyncShark.Engine.Tests</RootNamespace>
+    <AssemblyName>SyncShark.Engine.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Strategies\Compare\CompareTestArgs.cs" />
     <Compile Include="Strategies\Compare\CompareTestArgsFactory.cs" />
+    <Compile Include="Strategies\Compare\IDirectoryInfo.cs" />
     <Compile Include="Strategies\DirectorySnapshot\DirectorySnapshotBlacklistFilterTests.cs" />
     <Compile Include="Strategies\ExecuteStrategyTests.cs" />
     <Compile Include="Strategies\Compare\MirrorCompareStrategyTests.cs" />
@@ -60,9 +61,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SyncSharkEngine\SyncSharkEngine.csproj">
+    <ProjectReference Include="..\SyncShark.Interfaces\SyncShark.Interfaces.csproj">
+      <Project>{d68f89ab-aa84-44fe-af3a-d16efaeec0d7}</Project>
+      <Name>SyncShark.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SyncSharkEngine\SyncShark.Engine.csproj">
       <Project>{52caff30-eeea-402e-9968-1fe1ccaa2599}</Project>
-      <Name>SyncSharkEngine</Name>
+      <Name>SyncShark.Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

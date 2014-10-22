@@ -1,17 +1,18 @@
 ﻿using Moq;
 using NUnit.Framework;
-using SyncSharkEngine.Strategies.Compare;
-using SyncSharkEngine.FileSystem;
+using SyncShark.Engine.Strategies.Compare;
+using SyncShark.Engine.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SyncSharkEngine.Strategies.DirectorySnapshot;
-using SyncSharkEngine.Tests.Strategies.Compare;
+using SyncShark.Engine.Strategies.DirectorySnapshot;
+using SyncShark.Engine.Tests.Strategies.Compare;
+using SyncShark.Interfaces;
 
-namespace SyncSharkEngine.Tests.Compare
+namespace SyncShark.Engine.Tests.Compare
 {
     [TestFixture]
     class MirrorCompareStrategyTests

@@ -1,5 +1,6 @@
-﻿using SyncSharkEngine.FileSystem;
-using SyncSharkEngine.Strategies.DirectorySnapshot;
+﻿using SyncShark.Interfaces;
+using SyncShark.Engine.FileSystem;
+using SyncShark.Engine.Strategies.DirectorySnapshot;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncSharkEngine.Strategies.Compare
+namespace SyncShark.Engine.Strategies.Compare
 {
     public class MirrorCompareStrategy : ICompareStrategy
     {
