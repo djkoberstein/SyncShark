@@ -19,7 +19,6 @@ namespace SyncShark.Engine.Strategies
             m_CompareStrategy = compareStrategy;
         }
 
-
         public void CompareAndExecute(IDirectoryInfo leftDirectoryInfo, IDirectoryInfo rightDirectoryInfo)
         {
             var syncWorkItems = Compare(leftDirectoryInfo, rightDirectoryInfo);

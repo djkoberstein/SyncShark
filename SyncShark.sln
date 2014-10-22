@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2013 for Windows Desktop
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.Engine", "SyncSharkEngine\SyncShark.Engine.csproj", "{52CAFF30-EEEA-402E-9968-1FE1CCAA2599}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.Engine.Tests", "SyncSharkEngine.Tests\SyncShark.Engine.Tests.csproj", "{AB714F28-0D81-4004-9E4E-526C48F0E5ED}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.App", "SyncSharkApp\SyncShark.App.csproj", "{41959790-76AF-40D6-9E4D-77CB1ACEEC10}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0A115C40-34AE-4F14-87BF-2FB6F47734F1}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -18,12 +12,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0A115C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.Interfaces", "SyncShark.Interfaces\SyncShark.Interfaces.csproj", "{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.App", "SyncShark.App\SyncShark.App.csproj", "{41959790-76AF-40D6-9E4D-77CB1ACEEC10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.Engine", "SyncShark.Engine\SyncShark.Engine.csproj", "{52CAFF30-EEEA-402E-9968-1FE1CCAA2599}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.Engine.Tests", "SyncShark.Engine.Tests\SyncShark.Engine.Tests.csproj", "{AB714F28-0D81-4004-9E4E-526C48F0E5ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41959790-76AF-40D6-9E4D-77CB1ACEEC10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41959790-76AF-40D6-9E4D-77CB1ACEEC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41959790-76AF-40D6-9E4D-77CB1ACEEC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41959790-76AF-40D6-9E4D-77CB1ACEEC10}.Release|Any CPU.Build.0 = Release|Any CPU
 		{52CAFF30-EEEA-402E-9968-1FE1CCAA2599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{52CAFF30-EEEA-402E-9968-1FE1CCAA2599}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52CAFF30-EEEA-402E-9968-1FE1CCAA2599}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -32,14 +40,6 @@ Global
 		{AB714F28-0D81-4004-9E4E-526C48F0E5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB714F28-0D81-4004-9E4E-526C48F0E5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB714F28-0D81-4004-9E4E-526C48F0E5ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41959790-76AF-40D6-9E4D-77CB1ACEEC10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41959790-76AF-40D6-9E4D-77CB1ACEEC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41959790-76AF-40D6-9E4D-77CB1ACEEC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41959790-76AF-40D6-9E4D-77CB1ACEEC10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D68F89AB-AA84-44FE-AF3A-D16EFAEEC0D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

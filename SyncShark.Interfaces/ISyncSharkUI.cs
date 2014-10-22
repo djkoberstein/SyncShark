@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SyncShark.Interfaces
 {
-    public interface ISyncSharkFactory
+    public interface ISyncSharkUI
     {
-        ISyncSharkService GetSyncShark();
+        void Run(string[] args);
     }
 }

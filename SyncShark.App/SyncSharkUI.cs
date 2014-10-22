@@ -39,7 +39,7 @@ namespace SyncShark.App
         }
     }
 
-    public class SyncSharkUI
+    public class SyncSharkUI : ISyncSharkUI
     {
         private ISyncSharkService m_SyncSharkService;
         public SyncSharkUI(ISyncSharkService syncSharkService)

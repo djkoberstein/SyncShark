@@ -18,7 +18,7 @@ namespace SyncShark.Engine.Strategies.DirectorySnapshot
 
         private IDirectorySnapshotStrategy m_DirectorySnapshotStrategy;
 
-        public FileSystemSnapshotStrategy(MemorySnapshotStrategy inMemorySnapshotStrategy)
+        public FileSystemSnapshotStrategy(IDirectorySnapshotStrategy inMemorySnapshotStrategy)
         {
             m_DirectorySnapshotStrategy = inMemorySnapshotStrategy;
         }

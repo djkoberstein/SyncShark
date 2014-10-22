@@ -45,8 +45,8 @@
     <Compile Include="FileSystem\IFileSystemInfo.cs" />
     <Compile Include="FileSystem\IFileSystemInfoFactory.cs" />
     <Compile Include="FileSystem\ISyncWorkItem.cs" />
-    <Compile Include="ISyncSharkFactory.cs" />
     <Compile Include="ISyncSharkService.cs" />
+    <Compile Include="ISyncSharkUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\Compare\ICompareStrategy.cs" />
     <Compile Include="Strategies\DirectorySnapshot\IDirectorySnapshotStrategy.cs" />
