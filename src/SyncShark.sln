@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.Engine", "SyncSha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.Engine.Tests", "SyncShark.Engine.Tests\SyncShark.Engine.Tests.csproj", "{AB714F28-0D81-4004-9E4E-526C48F0E5ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncShark.WpfUI", "SyncShark.WpfUI\SyncShark.WpfUI.csproj", "{30E2EF3C-EC24-494E-BA0D-1A7060F88490}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{AB714F28-0D81-4004-9E4E-526C48F0E5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB714F28-0D81-4004-9E4E-526C48F0E5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB714F28-0D81-4004-9E4E-526C48F0E5ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30E2EF3C-EC24-494E-BA0D-1A7060F88490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30E2EF3C-EC24-494E-BA0D-1A7060F88490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30E2EF3C-EC24-494E-BA0D-1A7060F88490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30E2EF3C-EC24-494E-BA0D-1A7060F88490}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
