@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <views:ConfigurationView DataContext="{Binding ConfigureationViewModel}"/>
+        <views:ConfigurationView DataContext="{Binding ConfigurationViewModel}"/>
         <views:WorkItemView Grid.Row="1" DataContext="{Binding WorkItemViewModel}"/>
     </Grid>
 </Window>

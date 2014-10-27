@@ -44,7 +44,7 @@ namespace SyncShark.WpfUI
 
             var workItemViewModel = new WorkItemViewModel();
             var configurationViewModel = new ConfigurationViewModel();
-            var mainWindowViewModel = new MainWindowViewModel(workItemViewModel, configurationViewModel);
+            var mainWindowViewModel = new MainWindowViewModel(syncSharkService, workItemViewModel, configurationViewModel);
             var mainWindowView = new MainWindowView() { DataContext = mainWindowViewModel };
             var app = new App(mainWindowView);
 

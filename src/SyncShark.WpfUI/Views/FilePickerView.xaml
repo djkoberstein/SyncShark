@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="SyncShark.WpfUI.Views.FilePickerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:SyncShark.WpfUI.Views"
+             xmlns:viewModels="clr-namespace:SyncShark.WpfUI.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" 
+             d:DesignWidth="300">
+    <DockPanel Height="20" Name="LayoutRoot" d:DataContext="{d:DesignInstance Type=views:FilePickerView}">
+        <Button Width="20" DockPanel.Dock="Right" Click="BrowseFolder" Content="..."/>
+        <TextBox DockPanel.Dock="Right" Text="{Binding Path=Text, Mode=TwoWay}" />
+    </DockPanel>
+</UserControl>

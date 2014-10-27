@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SyncShark.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace SyncShark.WpfUI.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        private ISyncSharkService m_SyncSharkService;
+
         private WorkItemViewModel m_WorkItemViewModel;
         public WorkItemViewModel WorkItemViewModel 
         { 
@@ -23,7 +26,7 @@ namespace SyncShark.WpfUI.ViewModels
         }
 
         private ConfigurationViewModel m_ConfigureationViewModel;
-        public ConfigurationViewModel ConfigureationViewModel
+        public ConfigurationViewModel ConfigurationViewModel
         {
             get
             {
@@ -41,10 +44,12 @@ namespace SyncShark.WpfUI.ViewModels
 
         }
 
-        public MainWindowViewModel(WorkItemViewModel workItemViewModel, ConfigurationViewModel configureationViewModel)
+        public MainWindowViewModel(ISyncSharkService syncSharkService, WorkItemViewModel workItemViewModel, ConfigurationViewModel configurationViewModel)
         {
+            // TODO: Complete member initialization
+            m_SyncSharkService = syncSharkService;
             WorkItemViewModel = workItemViewModel;
-            ConfigureationViewModel = configureationViewModel;
+            ConfigurationViewModel = configurationViewModel;
         }
     }
 }

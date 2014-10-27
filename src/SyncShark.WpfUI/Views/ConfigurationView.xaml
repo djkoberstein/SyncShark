@@ -3,8 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:SyncShark.WpfUI.Views"
+             xmlns:viewModels="clr-namespace:SyncShark.WpfUI.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="90" d:DesignWidth="600">
+             d:DesignHeight="120" 
+             d:DesignWidth="600"
+             d:DataContext="{d:DesignInstance Type=viewModels:ConfigurationViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,17 +20,17 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <TextBlock Text="Source:" Margin="8,8,8,0"/>
-            <TextBox TextWrapping="Wrap" Text="TextBox" Margin="8,0,8,8"/>
+            <views:FilePickerView Margin="8,0,8,8" Text="{Binding Path=SourcePath, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
             <TextBlock Text="Destination:" Margin="8,8,8,0"/>
-            <TextBox TextWrapping="Wrap" Text="TextBox" Margin="8,0,8,8"/>
+            <views:FilePickerView Margin="8,0,8,8" Text="{Binding Path=DestinationPath, Mode=TwoWay}"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" >
             <Button Content="Compare" Margin="8" HorizontalAlignment="Left"/>
             <StackPanel VerticalAlignment="Center">
-                <RadioButton Content="Synchronize" />
-                <RadioButton  Content="Mirror" />
+                <RadioButton Content="Synchronize" IsChecked="{Binding IsSynchronizeChecked}" />
+                <RadioButton  Content="Mirror" IsChecked="{Binding IsMirrorChecked}" />
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Width="61">
