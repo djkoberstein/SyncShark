@@ -7,15 +7,13 @@
         xmlns:viewModels="clr-namespace:SyncShark.WpfUI.ViewModels"
         mc:Ignorable="d" 
         Title="SyncShark" 
-        Height="600" 
+        Height="150" 
         Width="525"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel, IsDesignTimeCreatable=True}">
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <views:ConfigurationView DataContext="{Binding ConfigurationViewModel}"/>
-        <views:WorkItemView Grid.Row="1" DataContext="{Binding WorkItemViewModel}"/>
+        <views:ConfigurationView />
     </Grid>
 </Window>

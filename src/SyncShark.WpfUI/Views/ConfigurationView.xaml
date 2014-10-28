@@ -6,9 +6,9 @@
              xmlns:views="clr-namespace:SyncShark.WpfUI.Views"
              xmlns:viewModels="clr-namespace:SyncShark.WpfUI.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="120" 
+             d:DesignHeight="100" 
              d:DesignWidth="600"
-             d:DataContext="{d:DesignInstance Type=viewModels:ConfigurationViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -34,7 +34,7 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Width="61">
-            <Button Content="Execute" Margin="8"/>
+            <Button Content="Execute" Margin="8" Command="{Binding ExecuteCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

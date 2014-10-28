@@ -42,10 +42,13 @@ namespace SyncShark.WpfUI
             // Service
             var syncSharkService = new SyncSharkService(syncExecuteStrategy, mirrorExecuteStrategy);
 
-            var workItemViewModel = new WorkItemViewModel();
-            var configurationViewModel = new ConfigurationViewModel();
-            var mainWindowViewModel = new MainWindowViewModel(syncSharkService, workItemViewModel, configurationViewModel);
+            var mainWindowViewModel = new MainWindowViewModel(syncSharkService);
+            mainWindowViewModel.SourcePath = @"C:\Users\Daniel\Desktop\NewFolder1";
+            mainWindowViewModel.DestinationPath = @"C:\Users\Daniel\Desktop\NewFolder2";
+            mainWindowViewModel.IsSynchronizeChecked = true;
+
             var mainWindowView = new MainWindowView() { DataContext = mainWindowViewModel };
+
             var app = new App(mainWindowView);
 
             return app;
