@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSystem\DirectoryInfoFactory.cs" />
     <Compile Include="FileSystem\FileSystemInfoFactory.cs" />
     <Compile Include="Strategies\Compare\MirrorCompareStrategy.cs" />
     <Compile Include="Strategies\Compare\SyncCompareStrategy.cs" />

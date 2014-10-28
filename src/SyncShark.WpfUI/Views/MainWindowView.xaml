@@ -4,12 +4,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"         
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:views="clr-namespace:SyncShark.WpfUI.Views"
-        xmlns:viewModels="clr-namespace:SyncShark.WpfUI.ViewModels"
+        xmlns:viewModel="clr-namespace:SyncShark.WpfUI.ViewModel"
         mc:Ignorable="d" 
         Title="SyncShark" 
         Height="150" 
         Width="525"
-        d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel, IsDesignTimeCreatable=True}">
+        d:DataContext="{d:DesignInstance Type=viewModel:MainWindowViewModel, IsDesignTimeCreatable=True}">
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

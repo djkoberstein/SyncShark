@@ -4,7 +4,7 @@ using SyncShark.Engine.Strategies;
 using SyncShark.Engine.Strategies.Compare;
 using SyncShark.Engine.Strategies.DirectorySnapshot;
 using SyncShark.Interfaces;
-using SyncShark.WpfUI.ViewModels;
+using SyncShark.WpfUI.ViewModel;
 using SyncShark.WpfUI.Views;
 using System;
 using System.Collections.Generic;
@@ -41,8 +41,8 @@ namespace SyncShark.WpfUI
 
             // Service
             var syncSharkService = new SyncSharkService(syncExecuteStrategy, mirrorExecuteStrategy);
-
-            var mainWindowViewModel = new MainWindowViewModel(syncSharkService);
+            var directoryInfoFactory = new DirectoryInfoFactory();
+            var mainWindowViewModel = new MainWindowViewModel(syncSharkService, directoryInfoFactory);
             mainWindowViewModel.SourcePath = @"C:\Users\Daniel\Desktop\NewFolder1";
             mainWindowViewModel.DestinationPath = @"C:\Users\Daniel\Desktop\NewFolder2";
             mainWindowViewModel.IsSynchronizeChecked = true;

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="FileSystem\FileActions.cs" />
     <Compile Include="FileSystem\IDirectoryInfo.cs" />
+    <Compile Include="FileSystem\IDirectoryInfoFactory.cs" />
     <Compile Include="FileSystem\IFileInfo.cs" />
     <Compile Include="FileSystem\IFileSystemInfo.cs" />
     <Compile Include="FileSystem\IFileSystemInfoFactory.cs" />

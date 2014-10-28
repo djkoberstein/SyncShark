@@ -11,11 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SyncShark.WpfUI.ViewModels
+namespace SyncShark.WpfUI.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
         private ISyncSharkService m_SyncSharkService;
+        private IDirectoryInfoFactory m_DirectoryInfoFactory;
 
         private string m_SourcePath;
         public string SourcePath
@@ -109,8 +110,8 @@ namespace SyncShark.WpfUI.ViewModels
         }
         private void ExecuteCommandExecute()
         {
-            var left = new DirectoryInfoFacade(new DirectoryInfo(m_SourcePath));
-            var right = new DirectoryInfoFacade(new DirectoryInfo(m_DestinationPath));
+            var left = m_DirectoryInfoFactory.GetDirectoryInfo(m_SourcePath);
+            var right = m_DirectoryInfoFactory.GetDirectoryInfo(m_DestinationPath);
 
             if (IsSynchronizeChecked)
             {
@@ -128,10 +129,11 @@ namespace SyncShark.WpfUI.ViewModels
             ExecuteCommand = new RelayCommand(ExecuteCommandExecute, ExecuteCommandCanExecute);
         }
 
-        public MainWindowViewModel(ISyncSharkService syncSharkService)
+        public MainWindowViewModel(ISyncSharkService syncSharkService, IDirectoryInfoFactory directoryInfoFactory)
             : this ()
         {
             m_SyncSharkService = syncSharkService;
+            m_DirectoryInfoFactory = directoryInfoFactory;
         }
 
 
