@@ -42,12 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileSystem\DirectoryInfoFactory.cs" />
-    <Compile Include="FileSystem\FileSystemInfoFactory.cs" />
+    <Compile Include="FileSystem\Facade\DirectoryInfoFactory.cs" />
+    <Compile Include="FileSystem\Facade\FileSystemInfoFactory.cs" />
+    <Compile Include="FileSystem\InMemory\DirectoryInfoInMemory.cs" />
+    <Compile Include="FileSystem\InMemory\DirectoryInfoInMemoryFactory.cs" />
+    <Compile Include="FileSystem\InMemory\FileInfoInMemory.cs" />
     <Compile Include="Strategies\Compare\MirrorCompareStrategy.cs" />
     <Compile Include="Strategies\Compare\SyncCompareStrategy.cs" />
-    <Compile Include="FileSystem\DirectoryInfoFacade.cs" />
-    <Compile Include="FileSystem\FileInfoFacade.cs" />
+    <Compile Include="FileSystem\Facade\DirectoryInfoFacade.cs" />
+    <Compile Include="FileSystem\Facade\FileInfoFacade.cs" />
     <Compile Include="FileSystem\SyncWorkItem.cs" />
     <Compile Include="Strategies\DirectorySnapshot\DirectorySnapshotBlacklistFilter.cs" />
     <Compile Include="Strategies\DirectorySnapshot\FileSystemSnapshotStrategy.cs" />
@@ -61,6 +64,9 @@
       <Project>{d68f89ab-aa84-44fe-af3a-d16efaeec0d7}</Project>
       <Name>SyncShark.Interfaces</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

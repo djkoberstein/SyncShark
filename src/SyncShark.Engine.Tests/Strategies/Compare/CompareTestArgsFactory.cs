@@ -20,7 +20,7 @@ namespace SyncShark.Engine.Tests.Strategies.Compare
 
             var directoryInfo = new Mock<IDirectoryInfo>();
             directoryInfo.Setup(o => o.FullName).Returns(dirPath);
-            directoryInfo.Setup(o => o.GetFileSystemInfos()).Returns(fileSystemInfos);
+            directoryInfo.Setup(o => o.EnumerateFileSystemInfos()).Returns(fileSystemInfos);
 
             var snapshot = new Dictionary<string, IFileSystemInfo>();
 
@@ -40,7 +40,7 @@ namespace SyncShark.Engine.Tests.Strategies.Compare
 
             var directoryInfo = new Mock<IDirectoryInfo>();
             directoryInfo.Setup(o => o.FullName).Returns(dirPath);
-            directoryInfo.Setup(o => o.GetFileSystemInfos()).Returns(fileSystemInfos);
+            directoryInfo.Setup(o => o.EnumerateFileSystemInfos()).Returns(fileSystemInfos);
 
             var snapshot = new Dictionary<string, IFileSystemInfo>();
             snapshot.Add(fileRelativePath, fileSystemInfo.Object);
@@ -61,7 +61,7 @@ namespace SyncShark.Engine.Tests.Strategies.Compare
 
             var directoryInfo = new Mock<IDirectoryInfo>();
             directoryInfo.Setup(o => o.FullName).Returns(dirPath);
-            directoryInfo.Setup(o => o.GetFileSystemInfos()).Returns(fileSystemInfos);
+            directoryInfo.Setup(o => o.EnumerateFileSystemInfos()).Returns(fileSystemInfos);
 
             var snapshot = new Dictionary<string, IFileSystemInfo>();
             snapshot.Add(dirRelativePath, fileSystemInfo.Object);

@@ -24,7 +24,7 @@ namespace SyncShark.Engine.FileSystem
         public string FullName { get; set; }
         public DateTime LastWriteTimeUtc { get; set; }
 
-        IEnumerable<IFileSystemInfo> IDirectoryInfo.GetFileSystemInfos()
+        IEnumerable<IFileSystemInfo> IDirectoryInfo.EnumerateFileSystemInfos()
         {
             foreach (var directoryInfo in m_DirectoryInfo.EnumerateDirectories())
             {

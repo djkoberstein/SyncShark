@@ -9,7 +9,7 @@ namespace SyncShark.Interfaces
 {
     public interface IDirectoryInfo : IFileSystemInfo
     {
-        IEnumerable<IFileSystemInfo> GetFileSystemInfos();
+        IEnumerable<IFileSystemInfo> EnumerateFileSystemInfos();
         void Create();
     }
 }

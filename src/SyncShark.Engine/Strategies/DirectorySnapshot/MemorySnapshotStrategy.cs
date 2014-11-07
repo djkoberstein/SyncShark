@@ -22,7 +22,7 @@ namespace SyncShark.Engine.Strategies.DirectorySnapshot
         {
             Dictionary<string, IFileSystemInfo> dicionary = new Dictionary<string, IFileSystemInfo>();
             m_InMemoryStore.Add(directoryInfo.FullName, dicionary);
-            foreach (var fileInfo in directoryInfo.GetFileSystemInfos())
+            foreach (var fileInfo in directoryInfo.EnumerateFileSystemInfos())
             {
                 string relativePath = fileInfo.FullName.Replace(directoryInfo.FullName, "");
                 dicionary.Add(relativePath, fileInfo);
